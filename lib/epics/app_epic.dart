@@ -1,4 +1,4 @@
-import 'package:homework_movie_app/actions/get_Movies.dart';
+import 'package:homework_movie_app/actions/get_movies.dart';
 import 'package:homework_movie_app/data/movie_api.dart';
 import 'package:homework_movie_app/models/app_state.dart';
 import 'package:redux_epics/redux_epics.dart';

@@ -1,8 +1,7 @@
+import 'package:homework_movie_app/actions/get_movies.dart';
 import 'package:homework_movie_app/models/app_state.dart';
 import 'package:homework_movie_app/models/movie.dart';
 import 'package:redux/redux.dart';
-
-import 'package:homework_movie_app/actions/get_Movies.dart';
 
 AppState reducer(AppState state, dynamic action) {
   final AppState newState = _reducer(state, action);

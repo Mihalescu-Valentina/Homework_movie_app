@@ -1,27 +1,19 @@
-class Movie {
-  Movie({
-    required this.title,
-    required this.year,
-    required this.rating,
-    required this.genres,
-    required this.poster,
-  });
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  Movie.fromJson(Map<String, dynamic> item)
-      : title = item['title'] as String,
-        year = item['year'] as int,
-        rating = (item['rating'] as num).toDouble(),
-        genres = List<String>.from(item['genres'] as List<dynamic>),
-        poster = item['medium_cover_image'] as String;
+part 'movie.freezed.dart';
 
-  final String title;
-  final int year;
-  final double rating;
-  final List<String> genres;
-  final String poster;
+part 'movie.g.dart';
 
-  @override
-  String toString() {
-    return 'Movie{title: $title,year: $year, rating: $rating, genres: $genres, poster: $poster}';
-  }
+@freezed
+class Movie with _$Movie {
+  const factory Movie({
+    required String title,
+    required int year,
+    required double rating,
+    required List<String> genres,
+    @JsonKey(name: 'medium_cover_image') required String poster,
+  }) = Movie$;
+
+  factory Movie.fromJson(Map<dynamic, dynamic> json) =>
+      _$MovieFromJson(Map<String, dynamic>.from(json));
 }

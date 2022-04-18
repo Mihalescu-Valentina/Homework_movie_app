@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:homework_movie_app/actions/get_Movies.dart';
+import 'package:homework_movie_app/actions/get_movies.dart';
 import 'package:homework_movie_app/models/app_state.dart';
 import 'package:homework_movie_app/models/movie.dart';
 import 'package:redux/redux.dart';
@@ -15,7 +15,7 @@ class HomePage extends StatelessWidget {
       builder: (BuildContext context, AppState state) {
         return Scaffold(
           appBar: AppBar(
-            title: Center(child: Text('Movies ${state.pageNumber}')),
+            title: Center(child: Text('Movies ${state.pageNumber - 1}')),
             actions: <Widget>[
               IconButton(
                 onPressed: () {
@@ -33,7 +33,6 @@ class HomePage extends StatelessWidget {
               return Stack(
                 children: <Widget>[
                   ListView.builder(
-                    //controller: scrollController,
                     itemCount: state.movies.length,
                     itemBuilder: (BuildContext context, int index) {
                       final Movie movie = state.movies[index];
