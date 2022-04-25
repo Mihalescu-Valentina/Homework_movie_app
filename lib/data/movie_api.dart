@@ -1,6 +1,7 @@
 import 'dart:convert';
+import 'dart:math';
 
-import 'package:homework_movie_app/models/movie.dart';
+import 'package:homework_movie_app/models/index.dart';
 import 'package:http/http.dart';
 
 class MovieApi {
@@ -11,6 +12,10 @@ class MovieApi {
   Future<List<Movie>> getMovies(int page) async {
     final Response response = await _client.get(Uri.parse(
         'https://yts.mx/api/v2/list_movies.json?quality=3D&page=$page'));
+
+    if (Random().nextInt(3) == 0) {
+      throw StateError('Some random error');
+    }
 
     final Map<String, dynamic> result =
         jsonDecode(response.body) as Map<String, dynamic>;

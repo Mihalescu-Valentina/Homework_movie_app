@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "413850286892",
+    "project_id": "movie-app-c976b",
+    "storage_bucket": "movie-app-c976b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:413850286892:android:807212c84c74f3a8d54a89",
+        "android_client_info": {
+          "package_name": "com.example.homework_movie_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "413850286892-gdas5d3hn6k444t39d0gh0vuho94l3h4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1-BoXpBiS6jl1IBWo62Hm61NZsN2i5iM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "413850286892-gdas5d3hn6k444t39d0gh0vuho94l3h4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

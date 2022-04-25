@@ -1,17 +1,12 @@
-import 'package:homework_movie_app/models/movie.dart';
+part of 'index.dart';
 
-class GetMovies {
-  GetMovies();
-}
+@freezed
+class GetMovies with _$GetMovies implements AppAction {
+  const factory GetMovies(ActionResult onResult) = GetMoviesStart;
 
-class GetMoviesSuccessful {
-  GetMoviesSuccessful(this.movies);
+  const factory GetMovies.successful(List<Movie> movies) = GetMoviesSuccessful;
 
-  final List<Movie> movies;
-}
-
-class GetMoviesError {
-  GetMoviesError(this.error);
-
-  final Object error;
+  @Implements<ErrorAction>()
+  const factory GetMovies.error(Object error, StackTrace stackTrace) =
+      GetMoviesError;
 }
