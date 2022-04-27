@@ -20,14 +20,14 @@ class _$AppStateTearOff {
 
   AppState$ call(
       {List<Movie> movies = const <Movie>[],
-      bool isLoading = true,
       int pageNumber = 1,
-      AppUser? user}) {
+      AppUser? user,
+      Set<String> pending = const <String>{}}) {
     return AppState$(
       movies: movies,
-      isLoading: isLoading,
       pageNumber: pageNumber,
       user: user,
+      pending: pending,
     );
   }
 }
@@ -37,10 +37,13 @@ const $AppState = _$AppStateTearOff();
 
 /// @nodoc
 mixin _$AppState {
-  List<Movie> get movies => throw _privateConstructorUsedError;
-  bool get isLoading => throw _privateConstructorUsedError;
+  List<Movie> get movies =>
+      throw _privateConstructorUsedError; //@Default(true) bool isLoading,
   int get pageNumber => throw _privateConstructorUsedError;
+
   AppUser? get user => throw _privateConstructorUsedError;
+
+  Set<String> get pending => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AppStateCopyWith<AppState> get copyWith =>
@@ -51,8 +54,9 @@ mixin _$AppState {
 abstract class $AppStateCopyWith<$Res> {
   factory $AppStateCopyWith(AppState value, $Res Function(AppState) then) =
       _$AppStateCopyWithImpl<$Res>;
+
   $Res call(
-      {List<Movie> movies, bool isLoading, int pageNumber, AppUser? user});
+      {List<Movie> movies, int pageNumber, AppUser? user, Set<String> pending});
 
   $AppUserCopyWith<$Res>? get user;
 }
@@ -68,19 +72,15 @@ class _$AppStateCopyWithImpl<$Res> implements $AppStateCopyWith<$Res> {
   @override
   $Res call({
     Object? movies = freezed,
-    Object? isLoading = freezed,
     Object? pageNumber = freezed,
     Object? user = freezed,
+    Object? pending = freezed,
   }) {
     return _then(_value.copyWith(
       movies: movies == freezed
           ? _value.movies
           : movies // ignore: cast_nullable_to_non_nullable
               as List<Movie>,
-      isLoading: isLoading == freezed
-          ? _value.isLoading
-          : isLoading // ignore: cast_nullable_to_non_nullable
-              as bool,
       pageNumber: pageNumber == freezed
           ? _value.pageNumber
           : pageNumber // ignore: cast_nullable_to_non_nullable
@@ -89,6 +89,10 @@ class _$AppStateCopyWithImpl<$Res> implements $AppStateCopyWith<$Res> {
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as AppUser?,
+      pending: pending == freezed
+          ? _value.pending
+          : pending // ignore: cast_nullable_to_non_nullable
+              as Set<String>,
     ));
   }
 
@@ -108,9 +112,10 @@ class _$AppStateCopyWithImpl<$Res> implements $AppStateCopyWith<$Res> {
 abstract class $AppState$CopyWith<$Res> implements $AppStateCopyWith<$Res> {
   factory $AppState$CopyWith(AppState$ value, $Res Function(AppState$) then) =
       _$AppState$CopyWithImpl<$Res>;
+
   @override
   $Res call(
-      {List<Movie> movies, bool isLoading, int pageNumber, AppUser? user});
+      {List<Movie> movies, int pageNumber, AppUser? user, Set<String> pending});
 
   @override
   $AppUserCopyWith<$Res>? get user;
@@ -128,19 +133,15 @@ class _$AppState$CopyWithImpl<$Res> extends _$AppStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? movies = freezed,
-    Object? isLoading = freezed,
     Object? pageNumber = freezed,
     Object? user = freezed,
+    Object? pending = freezed,
   }) {
     return _then(AppState$(
       movies: movies == freezed
           ? _value.movies
           : movies // ignore: cast_nullable_to_non_nullable
               as List<Movie>,
-      isLoading: isLoading == freezed
-          ? _value.isLoading
-          : isLoading // ignore: cast_nullable_to_non_nullable
-              as bool,
       pageNumber: pageNumber == freezed
           ? _value.pageNumber
           : pageNumber // ignore: cast_nullable_to_non_nullable
@@ -149,6 +150,10 @@ class _$AppState$CopyWithImpl<$Res> extends _$AppStateCopyWithImpl<$Res>
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as AppUser?,
+      pending: pending == freezed
+          ? _value.pending
+          : pending // ignore: cast_nullable_to_non_nullable
+              as Set<String>,
     ));
   }
 }
@@ -158,25 +163,25 @@ class _$AppState$CopyWithImpl<$Res> extends _$AppStateCopyWithImpl<$Res>
 class _$AppState$ implements AppState$ {
   const _$AppState$(
       {this.movies = const <Movie>[],
-      this.isLoading = true,
       this.pageNumber = 1,
-      this.user});
+      this.user,
+      this.pending = const <String>{}});
 
   @JsonKey()
   @override
   final List<Movie> movies;
   @JsonKey()
-  @override
-  final bool isLoading;
-  @JsonKey()
-  @override
+  @override //@Default(true) bool isLoading,
   final int pageNumber;
   @override
   final AppUser? user;
+  @JsonKey()
+  @override
+  final Set<String> pending;
 
   @override
   String toString() {
-    return 'AppState(movies: $movies, isLoading: $isLoading, pageNumber: $pageNumber, user: $user)';
+    return 'AppState(movies: $movies, pageNumber: $pageNumber, user: $user, pending: $pending)';
   }
 
   @override
@@ -185,19 +190,19 @@ class _$AppState$ implements AppState$ {
         (other.runtimeType == runtimeType &&
             other is AppState$ &&
             const DeepCollectionEquality().equals(other.movies, movies) &&
-            const DeepCollectionEquality().equals(other.isLoading, isLoading) &&
             const DeepCollectionEquality()
                 .equals(other.pageNumber, pageNumber) &&
-            const DeepCollectionEquality().equals(other.user, user));
+            const DeepCollectionEquality().equals(other.user, user) &&
+            const DeepCollectionEquality().equals(other.pending, pending));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(movies),
-      const DeepCollectionEquality().hash(isLoading),
       const DeepCollectionEquality().hash(pageNumber),
-      const DeepCollectionEquality().hash(user));
+      const DeepCollectionEquality().hash(user),
+      const DeepCollectionEquality().hash(pending));
 
   @JsonKey(ignore: true)
   @override
@@ -208,18 +213,22 @@ class _$AppState$ implements AppState$ {
 abstract class AppState$ implements AppState {
   const factory AppState$(
       {List<Movie> movies,
-      bool isLoading,
       int pageNumber,
-      AppUser? user}) = _$AppState$;
+      AppUser? user,
+      Set<String> pending}) = _$AppState$;
 
   @override
   List<Movie> get movies;
-  @override
-  bool get isLoading;
-  @override
+
+  @override //@Default(true) bool isLoading,
   int get pageNumber;
+
   @override
   AppUser? get user;
+
+  @override
+  Set<String> get pending;
+
   @override
   @JsonKey(ignore: true)
   $AppState$CopyWith<AppState$> get copyWith =>

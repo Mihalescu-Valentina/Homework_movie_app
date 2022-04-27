@@ -14,32 +14,35 @@ AppState reducer(AppState state, dynamic action) {
 Reducer<AppState> _reducer = combineReducers<AppState>(<Reducer<AppState>>[
 //the reducer modifies the state based on the actions
 
-  TypedReducer<AppState, GetMovies>(_getMovies),
+  //TypedReducer<AppState, GetMovies>(_getMovies),
   TypedReducer<AppState, GetMoviesSuccessful>(_getMoviesSuccessful),
-  TypedReducer<AppState, GetMoviesError>(_getMoviesError),
+  //TypedReducer<AppState, GetMoviesError>(_getMoviesError),
   TypedReducer<AppState, LoginSuccessful>(_loginSuccessful),
   TypedReducer<AppState, GetCurrentUserSuccessful>(_getCurrentUserSuccessful),
   TypedReducer<AppState, CreateUserSuccessful>(_createUserSuccessful),
   TypedReducer<AppState, UpdateFavoritesStart>(_updateFavoritesStart),
   TypedReducer<AppState, UpdateFavoritesError>(_updateFavoritesError),
+  TypedReducer<AppState, LogoutSuccessful>(_logoutSuccessful),
+  TypedReducer<AppState, ActionStart>(_actionStart),
+  TypedReducer<AppState, ActionDone>(_actionDone),
 ]);
 
-AppState _getMovies(AppState state, GetMovies action) {
+/*AppState _getMovies(AppState state, GetMovies action) {
   return state.copyWith(isLoading: true);
-}
+}*/
 
 AppState _getMoviesSuccessful(AppState state, GetMoviesSuccessful action) {
   return state.copyWith(
-    isLoading: false,
+    //isLoading: false,
     pageNumber: state.pageNumber + 1,
     movies: <Movie>[...state.movies, ...action.movies],
   );
 }
 
-AppState _getMoviesError(AppState state, GetMoviesError action) {
+/*AppState _getMoviesError(AppState state, GetMoviesError action) {
   return state.copyWith(isLoading: false);
 //... spread operator combines what was before with what we give it
-}
+}*/
 
 AppState _loginSuccessful(AppState state, LoginSuccessful action) {
   return state.copyWith(user: action.user);
@@ -73,4 +76,17 @@ AppState _updateFavoritesError(AppState state, UpdateFavoritesError action) {
     favoriteMovies.add(action.id);
   }
   return state.copyWith.user!.call(favoriteMovies: favoriteMovies);
+}
+
+AppState _logoutSuccessful(AppState state, LogoutSuccessful action) {
+  return state.copyWith(user: null);
+}
+
+AppState _actionStart(AppState state, ActionStart action) {
+  return state.copyWith(pending: <String>{...state.pending, action.pendingId});
+}
+
+AppState _actionDone(AppState state, ActionDone action) {
+  return state.copyWith(
+      pending: <String>{...state.pending}..remove(action.pendingId));
 }

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -21,9 +22,11 @@ Future<void> main() async {
   final FirebaseApp app = await Firebase.initializeApp();
   final FirebaseAuth auth = FirebaseAuth.instanceFor(app: app);
   final SharedPreferences preferences = await SharedPreferences.getInstance();
+  //await auth.signOut();
+  final FirebaseFirestore firestore = FirebaseFirestore.instanceFor(app: app);
   final Client client = Client();
   final MovieApi movieApi = MovieApi(client);
-  final AuthApi authApi = AuthApi(auth, preferences);
+  final AuthApi authApi = AuthApi(auth, firestore);
   final AppEpic epic = AppEpic(movieApi, authApi);
 
   final Store<AppState> store = Store<AppState>(
