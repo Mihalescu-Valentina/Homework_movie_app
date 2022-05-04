@@ -96,32 +96,39 @@ class _HomePageState extends State<HomePage> {
                               if (index == state.movies.length) {
                                 return const CircularProgressIndicator();
                               }
-                              return Column(
-                                children: <Widget>[
-                                  Stack(
-                                    children: <Widget>[
-                                      SizedBox(
-                                          height: 320,
-                                          child: Image.network(movie.poster)),
-                                      IconButton(
-                                        color: Colors.red,
-                                        onPressed: () {
-                                          StoreProvider.of<AppState>(context)
-                                              .dispatch(UpdateFavorites(
-                                                  movie.id,
-                                                  add: !isFavorite));
-                                        },
-                                        icon: Icon(isFavorite
-                                            ? Icons.favorite
-                                            : Icons.favorite_border),
-                                      )
-                                    ],
-                                  ),
-                                  Text(movie.title),
-                                  Text('${movie.year}'),
-                                  Text(movie.genres.join(',')),
-                                  Text('${movie.rating}')
-                                ],
+                              return GestureDetector(
+                                onTap: () {
+                                  StoreProvider.of<AppState>(context)
+                                      .dispatch(SetSelectedMovieId(movie.id));
+                                  Navigator.pushNamed(context, '/comments');
+                                },
+                                child: Column(
+                                  children: <Widget>[
+                                    Stack(
+                                      children: <Widget>[
+                                        SizedBox(
+                                            height: 320,
+                                            child: Image.network(movie.poster)),
+                                        IconButton(
+                                          color: Colors.red,
+                                          onPressed: () {
+                                            StoreProvider.of<AppState>(context)
+                                                .dispatch(UpdateFavorites(
+                                                    movie.id,
+                                                    add: !isFavorite));
+                                          },
+                                          icon: Icon(isFavorite
+                                              ? Icons.favorite
+                                              : Icons.favorite_border),
+                                        )
+                                      ],
+                                    ),
+                                    Text(movie.title),
+                                    Text('${movie.year}'),
+                                    Text(movie.genres.join(',')),
+                                    Text('${movie.rating}')
+                                  ],
+                                ),
                               );
                             },
                           ),

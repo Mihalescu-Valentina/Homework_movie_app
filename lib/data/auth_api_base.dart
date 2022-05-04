@@ -1,10 +1,9 @@
 import 'package:homework_movie_app/models/index.dart';
 
 abstract class AuthApiBase {
-  Future<AppUser> create(
-      {required String email,
-      required String password,
-      required String username});
+  Future<AppUser> create({required String email,
+    required String password,
+    required String username});
 
   Future<AppUser?> getCurrentUser();
 
@@ -12,5 +11,7 @@ abstract class AuthApiBase {
 
   Future<void> logout();
 
-  Future<void> updateFavorites(int id, {required bool add});
+  Future<void> updateFavorites(String uid, int id, {required bool add});
+
+  Future<AppUser> getUser(String uid);
 }

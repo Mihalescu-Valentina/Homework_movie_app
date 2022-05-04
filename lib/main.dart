@@ -8,6 +8,7 @@ import 'package:homework_movie_app/data/auth_api.dart';
 import 'package:homework_movie_app/data/movie_api.dart';
 import 'package:homework_movie_app/epics/app_epic.dart';
 import 'package:homework_movie_app/models/index.dart';
+import 'package:homework_movie_app/presentation/comments_page.dart';
 import 'package:homework_movie_app/presentation/home.dart';
 import 'package:homework_movie_app/presentation/login_page.dart';
 import 'package:homework_movie_app/presentation/sign_up_page.dart';
@@ -15,17 +16,15 @@ import 'package:homework_movie_app/reducer/reducer.dart';
 import 'package:http/http.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_epics/redux_epics.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final FirebaseApp app = await Firebase.initializeApp();
   final FirebaseAuth auth = FirebaseAuth.instanceFor(app: app);
-  final SharedPreferences preferences = await SharedPreferences.getInstance();
   //await auth.signOut();
   final FirebaseFirestore firestore = FirebaseFirestore.instanceFor(app: app);
   final Client client = Client();
-  final MovieApi movieApi = MovieApi(client);
+  final MovieApi movieApi = MovieApi(client, firestore);
   final AuthApi authApi = AuthApi(auth, firestore);
   final AppEpic epic = AppEpic(movieApi, authApi);
 
@@ -53,6 +52,7 @@ class MoviesApp extends StatelessWidget {
           '/': (BuildContext context) => const Home(),
           '/signUp': (BuildContext context) => const SignUpPage(),
           '/login': (BuildContext context) => const LoginPage(),
+          '/comments': (BuildContext context) => const CommentsPage(),
         },
       ),
     );

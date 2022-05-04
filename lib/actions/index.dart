@@ -1,13 +1,24 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:homework_movie_app/models/index.dart';
 
+part 'create_comment.dart';
+
 part 'create_user.dart';
 part 'get_current_user.dart';
+
 part 'get_movies.dart';
+
+part 'get_user.dart';
+
 part 'index.freezed.dart';
+
+part 'listenComments.dart';
+
 part 'login.dart';
 
 part 'logout.dart';
+
+part 'set.dart';
 
 part 'update_favorites.dart';
 

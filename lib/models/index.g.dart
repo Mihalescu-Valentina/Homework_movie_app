@@ -24,6 +24,23 @@ Map<String, dynamic> _$$AppUser$ToJson(_$AppUser$ instance) =>
       'favoriteMovies': instance.favoriteMovies,
     };
 
+_$Comment$ _$$Comment$FromJson(Map<String, dynamic> json) => _$Comment$(
+      id: json['id'] as String,
+      uid: json['uid'] as String,
+      movieId: json['movieId'] as int,
+      text: json['text'] as String,
+      createdAt: DateTime.parse(json['createdAt'] as String),
+    );
+
+Map<String, dynamic> _$$Comment$ToJson(_$Comment$ instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'uid': instance.uid,
+      'movieId': instance.movieId,
+      'text': instance.text,
+      'createdAt': instance.createdAt.toIso8601String(),
+    };
+
 _$Movie$ _$$Movie$FromJson(Map<String, dynamic> json) => _$Movie$(
       id: json['id'] as int,
       title: json['title'] as String,

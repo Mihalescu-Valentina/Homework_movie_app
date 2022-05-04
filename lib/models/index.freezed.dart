@@ -22,12 +22,18 @@ class _$AppStateTearOff {
       {List<Movie> movies = const <Movie>[],
       int pageNumber = 1,
       AppUser? user,
-      Set<String> pending = const <String>{}}) {
+      Set<String> pending = const <String>{},
+      List<Comment> comments = const <Comment>[],
+      int? selectedMovieId,
+      Map<String, AppUser> users = const <String, AppUser>{}}) {
     return AppState$(
       movies: movies,
       pageNumber: pageNumber,
       user: user,
       pending: pending,
+      comments: comments,
+      selectedMovieId: selectedMovieId,
+      users: users,
     );
   }
 }
@@ -40,10 +46,11 @@ mixin _$AppState {
   List<Movie> get movies =>
       throw _privateConstructorUsedError; //@Default(true) bool isLoading,
   int get pageNumber => throw _privateConstructorUsedError;
-
   AppUser? get user => throw _privateConstructorUsedError;
-
   Set<String> get pending => throw _privateConstructorUsedError;
+  List<Comment> get comments => throw _privateConstructorUsedError;
+  int? get selectedMovieId => throw _privateConstructorUsedError;
+  Map<String, AppUser> get users => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AppStateCopyWith<AppState> get copyWith =>
@@ -54,9 +61,14 @@ mixin _$AppState {
 abstract class $AppStateCopyWith<$Res> {
   factory $AppStateCopyWith(AppState value, $Res Function(AppState) then) =
       _$AppStateCopyWithImpl<$Res>;
-
   $Res call(
-      {List<Movie> movies, int pageNumber, AppUser? user, Set<String> pending});
+      {List<Movie> movies,
+      int pageNumber,
+      AppUser? user,
+      Set<String> pending,
+      List<Comment> comments,
+      int? selectedMovieId,
+      Map<String, AppUser> users});
 
   $AppUserCopyWith<$Res>? get user;
 }
@@ -75,6 +87,9 @@ class _$AppStateCopyWithImpl<$Res> implements $AppStateCopyWith<$Res> {
     Object? pageNumber = freezed,
     Object? user = freezed,
     Object? pending = freezed,
+    Object? comments = freezed,
+    Object? selectedMovieId = freezed,
+    Object? users = freezed,
   }) {
     return _then(_value.copyWith(
       movies: movies == freezed
@@ -93,6 +108,18 @@ class _$AppStateCopyWithImpl<$Res> implements $AppStateCopyWith<$Res> {
           ? _value.pending
           : pending // ignore: cast_nullable_to_non_nullable
               as Set<String>,
+      comments: comments == freezed
+          ? _value.comments
+          : comments // ignore: cast_nullable_to_non_nullable
+              as List<Comment>,
+      selectedMovieId: selectedMovieId == freezed
+          ? _value.selectedMovieId
+          : selectedMovieId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      users: users == freezed
+          ? _value.users
+          : users // ignore: cast_nullable_to_non_nullable
+              as Map<String, AppUser>,
     ));
   }
 
@@ -112,10 +139,15 @@ class _$AppStateCopyWithImpl<$Res> implements $AppStateCopyWith<$Res> {
 abstract class $AppState$CopyWith<$Res> implements $AppStateCopyWith<$Res> {
   factory $AppState$CopyWith(AppState$ value, $Res Function(AppState$) then) =
       _$AppState$CopyWithImpl<$Res>;
-
   @override
   $Res call(
-      {List<Movie> movies, int pageNumber, AppUser? user, Set<String> pending});
+      {List<Movie> movies,
+      int pageNumber,
+      AppUser? user,
+      Set<String> pending,
+      List<Comment> comments,
+      int? selectedMovieId,
+      Map<String, AppUser> users});
 
   @override
   $AppUserCopyWith<$Res>? get user;
@@ -136,6 +168,9 @@ class _$AppState$CopyWithImpl<$Res> extends _$AppStateCopyWithImpl<$Res>
     Object? pageNumber = freezed,
     Object? user = freezed,
     Object? pending = freezed,
+    Object? comments = freezed,
+    Object? selectedMovieId = freezed,
+    Object? users = freezed,
   }) {
     return _then(AppState$(
       movies: movies == freezed
@@ -154,6 +189,18 @@ class _$AppState$CopyWithImpl<$Res> extends _$AppStateCopyWithImpl<$Res>
           ? _value.pending
           : pending // ignore: cast_nullable_to_non_nullable
               as Set<String>,
+      comments: comments == freezed
+          ? _value.comments
+          : comments // ignore: cast_nullable_to_non_nullable
+              as List<Comment>,
+      selectedMovieId: selectedMovieId == freezed
+          ? _value.selectedMovieId
+          : selectedMovieId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      users: users == freezed
+          ? _value.users
+          : users // ignore: cast_nullable_to_non_nullable
+              as Map<String, AppUser>,
     ));
   }
 }
@@ -165,7 +212,10 @@ class _$AppState$ implements AppState$ {
       {this.movies = const <Movie>[],
       this.pageNumber = 1,
       this.user,
-      this.pending = const <String>{}});
+      this.pending = const <String>{},
+      this.comments = const <Comment>[],
+      this.selectedMovieId,
+      this.users = const <String, AppUser>{}});
 
   @JsonKey()
   @override
@@ -178,10 +228,18 @@ class _$AppState$ implements AppState$ {
   @JsonKey()
   @override
   final Set<String> pending;
+  @JsonKey()
+  @override
+  final List<Comment> comments;
+  @override
+  final int? selectedMovieId;
+  @JsonKey()
+  @override
+  final Map<String, AppUser> users;
 
   @override
   String toString() {
-    return 'AppState(movies: $movies, pageNumber: $pageNumber, user: $user, pending: $pending)';
+    return 'AppState(movies: $movies, pageNumber: $pageNumber, user: $user, pending: $pending, comments: $comments, selectedMovieId: $selectedMovieId, users: $users)';
   }
 
   @override
@@ -193,7 +251,11 @@ class _$AppState$ implements AppState$ {
             const DeepCollectionEquality()
                 .equals(other.pageNumber, pageNumber) &&
             const DeepCollectionEquality().equals(other.user, user) &&
-            const DeepCollectionEquality().equals(other.pending, pending));
+            const DeepCollectionEquality().equals(other.pending, pending) &&
+            const DeepCollectionEquality().equals(other.comments, comments) &&
+            const DeepCollectionEquality()
+                .equals(other.selectedMovieId, selectedMovieId) &&
+            const DeepCollectionEquality().equals(other.users, users));
   }
 
   @override
@@ -202,7 +264,10 @@ class _$AppState$ implements AppState$ {
       const DeepCollectionEquality().hash(movies),
       const DeepCollectionEquality().hash(pageNumber),
       const DeepCollectionEquality().hash(user),
-      const DeepCollectionEquality().hash(pending));
+      const DeepCollectionEquality().hash(pending),
+      const DeepCollectionEquality().hash(comments),
+      const DeepCollectionEquality().hash(selectedMovieId),
+      const DeepCollectionEquality().hash(users));
 
   @JsonKey(ignore: true)
   @override
@@ -215,20 +280,25 @@ abstract class AppState$ implements AppState {
       {List<Movie> movies,
       int pageNumber,
       AppUser? user,
-      Set<String> pending}) = _$AppState$;
+      Set<String> pending,
+      List<Comment> comments,
+      int? selectedMovieId,
+      Map<String, AppUser> users}) = _$AppState$;
 
   @override
   List<Movie> get movies;
-
   @override //@Default(true) bool isLoading,
   int get pageNumber;
-
   @override
   AppUser? get user;
-
   @override
   Set<String> get pending;
-
+  @override
+  List<Comment> get comments;
+  @override
+  int? get selectedMovieId;
+  @override
+  Map<String, AppUser> get users;
   @override
   @JsonKey(ignore: true)
   $AppState$CopyWith<AppState$> get copyWith =>
@@ -444,6 +514,237 @@ abstract class AppUser$ implements AppUser {
   @override
   @JsonKey(ignore: true)
   $AppUser$CopyWith<AppUser$> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+Comment _$CommentFromJson(Map<String, dynamic> json) {
+  return Comment$.fromJson(json);
+}
+
+/// @nodoc
+class _$CommentTearOff {
+  const _$CommentTearOff();
+
+  Comment$ call(
+      {required String id,
+      required String uid,
+      required int movieId,
+      required String text,
+      required DateTime createdAt}) {
+    return Comment$(
+      id: id,
+      uid: uid,
+      movieId: movieId,
+      text: text,
+      createdAt: createdAt,
+    );
+  }
+
+  Comment fromJson(Map<String, Object?> json) {
+    return Comment.fromJson(json);
+  }
+}
+
+/// @nodoc
+const $Comment = _$CommentTearOff();
+
+/// @nodoc
+mixin _$Comment {
+  String get id => throw _privateConstructorUsedError;
+  String get uid => throw _privateConstructorUsedError;
+  int get movieId => throw _privateConstructorUsedError;
+  String get text => throw _privateConstructorUsedError;
+  DateTime get createdAt => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $CommentCopyWith<Comment> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CommentCopyWith<$Res> {
+  factory $CommentCopyWith(Comment value, $Res Function(Comment) then) =
+      _$CommentCopyWithImpl<$Res>;
+  $Res call(
+      {String id, String uid, int movieId, String text, DateTime createdAt});
+}
+
+/// @nodoc
+class _$CommentCopyWithImpl<$Res> implements $CommentCopyWith<$Res> {
+  _$CommentCopyWithImpl(this._value, this._then);
+
+  final Comment _value;
+  // ignore: unused_field
+  final $Res Function(Comment) _then;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? uid = freezed,
+    Object? movieId = freezed,
+    Object? text = freezed,
+    Object? createdAt = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      uid: uid == freezed
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
+              as String,
+      movieId: movieId == freezed
+          ? _value.movieId
+          : movieId // ignore: cast_nullable_to_non_nullable
+              as int,
+      text: text == freezed
+          ? _value.text
+          : text // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: createdAt == freezed
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class $Comment$CopyWith<$Res> implements $CommentCopyWith<$Res> {
+  factory $Comment$CopyWith(Comment$ value, $Res Function(Comment$) then) =
+      _$Comment$CopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {String id, String uid, int movieId, String text, DateTime createdAt});
+}
+
+/// @nodoc
+class _$Comment$CopyWithImpl<$Res> extends _$CommentCopyWithImpl<$Res>
+    implements $Comment$CopyWith<$Res> {
+  _$Comment$CopyWithImpl(Comment$ _value, $Res Function(Comment$) _then)
+      : super(_value, (v) => _then(v as Comment$));
+
+  @override
+  Comment$ get _value => super._value as Comment$;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? uid = freezed,
+    Object? movieId = freezed,
+    Object? text = freezed,
+    Object? createdAt = freezed,
+  }) {
+    return _then(Comment$(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      uid: uid == freezed
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
+              as String,
+      movieId: movieId == freezed
+          ? _value.movieId
+          : movieId // ignore: cast_nullable_to_non_nullable
+              as int,
+      text: text == freezed
+          ? _value.text
+          : text // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: createdAt == freezed
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$Comment$ implements Comment$ {
+  const _$Comment$(
+      {required this.id,
+      required this.uid,
+      required this.movieId,
+      required this.text,
+      required this.createdAt});
+
+  factory _$Comment$.fromJson(Map<String, dynamic> json) =>
+      _$$Comment$FromJson(json);
+
+  @override
+  final String id;
+  @override
+  final String uid;
+  @override
+  final int movieId;
+  @override
+  final String text;
+  @override
+  final DateTime createdAt;
+
+  @override
+  String toString() {
+    return 'Comment(id: $id, uid: $uid, movieId: $movieId, text: $text, createdAt: $createdAt)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is Comment$ &&
+            const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality().equals(other.uid, uid) &&
+            const DeepCollectionEquality().equals(other.movieId, movieId) &&
+            const DeepCollectionEquality().equals(other.text, text) &&
+            const DeepCollectionEquality().equals(other.createdAt, createdAt));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(uid),
+      const DeepCollectionEquality().hash(movieId),
+      const DeepCollectionEquality().hash(text),
+      const DeepCollectionEquality().hash(createdAt));
+
+  @JsonKey(ignore: true)
+  @override
+  $Comment$CopyWith<Comment$> get copyWith =>
+      _$Comment$CopyWithImpl<Comment$>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$Comment$ToJson(this);
+  }
+}
+
+abstract class Comment$ implements Comment {
+  const factory Comment$(
+      {required String id,
+      required String uid,
+      required int movieId,
+      required String text,
+      required DateTime createdAt}) = _$Comment$;
+
+  factory Comment$.fromJson(Map<String, dynamic> json) = _$Comment$.fromJson;
+
+  @override
+  String get id;
+  @override
+  String get uid;
+  @override
+  int get movieId;
+  @override
+  String get text;
+  @override
+  DateTime get createdAt;
+  @override
+  @JsonKey(ignore: true)
+  $Comment$CopyWith<Comment$> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

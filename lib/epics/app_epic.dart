@@ -15,11 +15,14 @@ class AppEpic {
     return combineEpics(<Epic<AppState>>[
       //TypedEpic<AppState, GetMoviesStart>(_getMovies),
       _getMovies,
+      _getComments,
+      TypedEpic<AppState, CreateCommentStart>(_createCommentStart),
       TypedEpic<AppState, LoginStart>(_loginStart),
       TypedEpic<AppState, GetCurrentUserStart>(_getCurrentUserStart),
       TypedEpic<AppState, CreateUserStart>(_createUserStart),
       TypedEpic<AppState, UpdateFavoritesStart>(_updateFavoritesStart),
       TypedEpic<AppState, LogoutStart>(_logoutStart),
+      TypedEpic<AppState, GetUserStart>(_getUserStart),
     ]);
   }
 
@@ -71,8 +74,11 @@ class AppEpic {
           .asyncMap((_) =>
               _authApi.login(email: action.email, password: action.password))
           .map<Login>($Login.successful)
-          .onErrorReturnWith($Login.error)
-          .doOnData(action.onResult);
+          .onErrorReturnWith(
+        (error, stackTrace) {
+          return Login.error(error, stackTrace);
+        },
+      ).doOnData(action.onResult);
     });
   }
 
@@ -104,7 +110,8 @@ class AppEpic {
       Stream<UpdateFavoritesStart> actions, EpicStore<AppState> store) {
     return actions.flatMap((UpdateFavoritesStart action) {
       return Stream<void>.value(null)
-          .asyncMap((_) => _authApi.updateFavorites(action.id, add: action.add))
+          .asyncMap((_) => _authApi.updateFavorites(
+              store.state.user!.uid, action.id, add: action.add))
           .mapTo(const UpdateFavorites.successful())
           .onErrorReturnWith((error, stackTrace) => UpdateFavorites.error(
               error, stackTrace, action.id,
@@ -119,6 +126,49 @@ class AppEpic {
           .asyncMap((_) => _authApi.logout())
           .mapTo(const Logout.successful())
           .onErrorReturnWith($Logout.error);
+    });
+  }
+
+  Stream<AppAction> _getComments(
+      Stream<dynamic> actions, EpicStore<AppState> store) {
+    return actions
+        .whereType<ListenForCommentsStart>()
+        .flatMap((ListenForCommentsStart action) {
+      return _movieApi
+          .listenForComments(action.movieId)
+          .map<ListenForComments>($ListenForComments.event)
+          .takeUntil<dynamic>(
+        actions.where((dynamic event) {
+          return event is ListenForCommentsDone &&
+              event.movieId == action.movieId;
+        }),
+      ).onErrorReturnWith($ListenForComments.error);
+    });
+  }
+
+  Stream<AppAction> _createCommentStart(
+      Stream<CreateCommentStart> actions, EpicStore<AppState> store) {
+    return actions.flatMap((CreateCommentStart action) {
+      return Stream<void>.value(null)
+          .asyncMap((_) {
+            return _movieApi.createComment(
+              uid: store.state.user!.uid,
+              movieId: store.state.selectedMovieId!,
+              text: action.text,
+            );
+          })
+          .mapTo(const CreateComment.successful())
+          .onErrorReturnWith($CreateComment.error);
+    });
+  }
+
+  Stream _getUserStart(
+      Stream<GetUserStart> actions, EpicStore<AppState> store) {
+    return actions.flatMap((GetUserStart action) {
+      return Stream<void>.value(null)
+          .asyncMap((_) => _authApi.getUser(action.uid))
+          .map<GetUser>($GetUser.successful)
+          .onErrorReturnWith($GetUser.error);
     });
   }
 }
