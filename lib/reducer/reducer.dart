@@ -28,6 +28,7 @@ Reducer<AppState> _reducer = combineReducers<AppState>(<Reducer<AppState>>[
   TypedReducer<AppState, OnCommentsEvent>(_onCommentsEvent),
   TypedReducer<AppState, SetSelectedMovieId>(_setSelectedMovieId),
   TypedReducer<AppState, GetUserSuccessful>(_getUserSuccessful),
+  TypedReducer<AppState, GetFilteredSuccessful>(_getFilteredSuccessful),
 ]);
 
 /*AppState _getMovies(AppState state, GetMovies action) {
@@ -110,4 +111,8 @@ AppState _getUserSuccessful(AppState state, GetUserSuccessful action) {
       action.user.uid: action.user,
     },
   );
+}
+
+AppState _getFilteredSuccessful(AppState state, GetFilteredSuccessful action) {
+  return state.copyWith(filteredMovies: action.filteredMovies);
 }

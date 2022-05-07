@@ -15,6 +15,7 @@ class CommentsContainer extends StatelessWidget {
         return store.state.comments
             .where((Comment comment) =>
                 comment.movieId == store.state.selectedMovieId)
+            .where((Comment comment) => store.state.users[comment.uid] != null)
             .toList();
       },
       builder: builder,

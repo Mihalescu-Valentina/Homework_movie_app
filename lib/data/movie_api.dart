@@ -31,7 +31,7 @@ class MovieApi {
   Stream<List<Comment>> listenForComments(int movieId) {
     return _firestore
         .collection('comments')
-        .where('moviesId', isEqualTo: movieId)
+        .where('movieId', isEqualTo: movieId)
         .snapshots()
         .map((QuerySnapshot<Map<String, dynamic>> snapshot) {
       return snapshot.docs
@@ -53,5 +53,26 @@ class MovieApi {
       createdAt: DateTime.now(),
     );
     await ref.set(comment.toJson());
+  }
+
+  Future<List<Movie>> getFilteredMovies(String filter, String result) async {
+    final Response response = await _client
+        .get(Uri.parse('https://yts.mx/api/v2/list_movies.json?quality=3D'));
+
+    final Map<String, dynamic> result =
+        jsonDecode(response.body) as Map<String, dynamic>;
+
+    final Map<String, dynamic> data = result['data'] as Map<String, dynamic>;
+    final List<dynamic> movies = data['movies'] as List<dynamic>;
+
+    final List<Movie> list = <Movie>[];
+    for (int i = 0; i < movies.length; i++) {
+      if (movies[i][filter] == result) {
+        final Map<String, dynamic> item =
+            movies[i][filter] as Map<String, dynamic>;
+        list.add(Movie.fromJson(item));
+      }
+    }
+    return list;
   }
 }

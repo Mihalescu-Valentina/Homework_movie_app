@@ -16,6 +16,7 @@ class AppEpic {
       //TypedEpic<AppState, GetMoviesStart>(_getMovies),
       _getMovies,
       _getComments,
+      _listenForComments,
       TypedEpic<AppState, CreateCommentStart>(_createCommentStart),
       TypedEpic<AppState, LoginStart>(_loginStart),
       TypedEpic<AppState, GetCurrentUserStart>(_getCurrentUserStart),
@@ -23,6 +24,7 @@ class AppEpic {
       TypedEpic<AppState, UpdateFavoritesStart>(_updateFavoritesStart),
       TypedEpic<AppState, LogoutStart>(_logoutStart),
       TypedEpic<AppState, GetUserStart>(_getUserStart),
+      TypedEpic<AppState, GetFilteredStart>(_getFilteredStart),
     ]);
   }
 
@@ -162,6 +164,31 @@ class AppEpic {
     });
   }
 
+  Stream<AppAction> _listenForComments(
+      Stream<dynamic> actions, EpicStore<AppState> store) {
+    return actions
+        .whereType<ListenForCommentsStart>()
+        .flatMap((ListenForCommentsStart action) {
+      return _movieApi
+          .listenForComments(action.movieId)
+          .expand((List<Comment> comments) {
+        return <AppAction>[
+          ListenForComments.event(comments),
+          ...comments
+              .where(
+                  (Comment comment) => store.state.users[comment.uid] == null)
+              .map((Comment comment) => GetUser(comment.uid))
+              .toSet(),
+        ];
+      }).takeUntil<dynamic>(
+        actions.where((dynamic event) {
+          return event is ListenForCommentsDone &&
+              event.movieId == action.movieId;
+        }),
+      ).onErrorReturnWith($ListenForComments.error);
+    });
+  }
+
   Stream _getUserStart(
       Stream<GetUserStart> actions, EpicStore<AppState> store) {
     return actions.flatMap((GetUserStart action) {
@@ -169,6 +196,17 @@ class AppEpic {
           .asyncMap((_) => _authApi.getUser(action.uid))
           .map<GetUser>($GetUser.successful)
           .onErrorReturnWith($GetUser.error);
+    });
+  }
+
+  Stream _getFilteredStart(
+      Stream<GetFilteredStart> actions, EpicStore<AppState> store) {
+    return actions.flatMap((GetFilteredStart action) {
+      return Stream<void>.value(null)
+          .asyncMap(
+              (_) => _movieApi.getFilteredMovies(action.filter, action.result))
+          .map<dynamic>($GetFiltered.successful)
+          .onErrorReturnWith($GetFiltered.error);
     });
   }
 }

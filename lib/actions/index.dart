@@ -18,6 +18,8 @@ part 'login.dart';
 
 part 'logout.dart';
 
+part 'get_filtered.dart';
+
 part 'set.dart';
 
 part 'update_favorites.dart';
