@@ -23,18 +23,20 @@ class _SignUpPageState extends State<SignUpPage> {
     return Scaffold(body: Form(child: Builder(builder: (BuildContext context) {
       return SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Center(
-            child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-              TextFormField(
-                controller: _email,
-                keyboardType: TextInputType.emailAddress,
-                autofocus: true,
-                textInputAction: TextInputAction.next,
-                decoration: const InputDecoration(
-                  hintText: 'email',
-                ),
-                validator: (String? value) {
+          padding: const EdgeInsets.all(16),
+                child: Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      TextFormField(
+                        controller: _email,
+                        keyboardType: TextInputType.emailAddress,
+                        autofocus: true,
+                        textInputAction: TextInputAction.next,
+                        decoration: const InputDecoration(
+                          hintText: 'email',
+                        ),
+                        validator: (String? value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your email!';
                   } else if (!value.contains('@')) {
@@ -59,7 +61,8 @@ class _SignUpPageState extends State<SignUpPage> {
                   } else if (value.length < 6) {
                     return 'Please enter a password longer than 6 characters';
                   }
-                },
+                  return null;
+                        },
                 onFieldSubmitted: (String value) {
                   FocusScope.of(context).requestFocus(_usernameNode);
                 },
@@ -73,7 +76,8 @@ class _SignUpPageState extends State<SignUpPage> {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your username!';
                   }
-                },
+                  return null;
+                        },
                 onFieldSubmitted: (String value) {
                   _onNext(context);
                 },
@@ -83,21 +87,27 @@ class _SignUpPageState extends State<SignUpPage> {
                 onPressed: () => _onNext(context),
                 child: const Text('Sign Up'),
               ),
-              const SizedBox(height: 16),
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('Login',
-                    style: TextStyle(
-                      color: Colors.black,
-                    )),
+                      const SizedBox(height: 16),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text(
+                          'Login',
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ]),
-          ),
+            );
+          },
         ),
-      );
-    })));
+      ),
+    );
   }
 
   void _onNext(BuildContext context) {
@@ -105,10 +115,11 @@ class _SignUpPageState extends State<SignUpPage> {
       return;
     }
     final CreateUser action = CreateUser(
-        email: _email.text,
-        password: _password.text,
-        username: _username.text,
-        onResult: _onResult);
+      email: _email.text,
+      password: _password.text,
+      username: _username.text,
+      onResult: _onResult,
+    );
     StoreProvider.of<AppState>(context).dispatch(action);
   }
 

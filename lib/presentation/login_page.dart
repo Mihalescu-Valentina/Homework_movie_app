@@ -29,18 +29,20 @@ class _LoginPageState extends State<LoginPage> {
         }
         return SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Center(
-              child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                TextFormField(
-                  controller: _email,
-                  keyboardType: TextInputType.emailAddress,
-                  textInputAction: TextInputAction.next,
-                  autofocus: true,
-                  decoration: const InputDecoration(
-                    hintText: 'email',
-                  ),
-                  validator: (String? value) {
+            padding: const EdgeInsets.all(16),
+                child: Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      TextFormField(
+                        controller: _email,
+                        keyboardType: TextInputType.emailAddress,
+                        textInputAction: TextInputAction.next,
+                        autofocus: true,
+                        decoration: const InputDecoration(
+                          hintText: 'email',
+                        ),
+                        validator: (String? value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your email!';
                     } else if (!value.contains('@')) {
@@ -65,7 +67,8 @@ class _LoginPageState extends State<LoginPage> {
                     } else if (value.length < 6) {
                       return 'Please enter a password longer than 6 characters';
                     }
-                  },
+                    return null;
+                        },
                   onFieldSubmitted: (String value) {
                     _onNext(context);
                   },
@@ -75,30 +78,40 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: () => _onNext(context),
                   child: const Text('Login'),
                 ),
-                const SizedBox(height: 16),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/signUp');
-                  },
-                  child: const Text('Sign Up',
-                      style: TextStyle(
-                        color: Colors.black,
-                      )),
+                      const SizedBox(height: 16),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/signUp');
+                        },
+                        child: const Text(
+                          'Sign Up',
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ]),
-            ),
-          ),
-        );
-      }),
-    ));
+              ),
+            );
+          },
+        ),
+      ),
+    );
   }
 
   void _onNext(BuildContext context) {
     if (!Form.of(context)!.validate()) {
       return;
     }
-    StoreProvider.of<AppState>(context).dispatch(Login.start(
-        email: _email.text, password: _password.text, onResult: _onResult));
+    StoreProvider.of<AppState>(context).dispatch(
+      Login.start(
+        email: _email.text,
+        password: _password.text,
+        onResult: _onResult,
+      ),
+    );
   }
 
   void _onResult(AppAction action) {

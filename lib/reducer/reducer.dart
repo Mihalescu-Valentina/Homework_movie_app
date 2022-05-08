@@ -54,7 +54,9 @@ AppState _loginSuccessful(AppState state, LoginSuccessful action) {
 }
 
 AppState _getCurrentUserSuccessful(
-    AppState state, GetCurrentUserSuccessful action) {
+  AppState state,
+  GetCurrentUserSuccessful action,
+) {
   return state.copyWith(user: action.user);
 }
 
@@ -63,7 +65,10 @@ AppState _createUserSuccessful(AppState state, CreateUserSuccessful action) {
 }
 
 AppState _updateFavoritesStart(AppState state, UpdateFavoritesStart action) {
-  final List<int> favoriteMovies = [...state.user!.favoriteMovies, action.id];
+  final List<int> favoriteMovies = <int>[
+    ...state.user!.favoriteMovies,
+    action.id
+  ];
   if (action.add) {
     favoriteMovies.add(action.id);
   } else {
@@ -73,7 +78,10 @@ AppState _updateFavoritesStart(AppState state, UpdateFavoritesStart action) {
 }
 
 AppState _updateFavoritesError(AppState state, UpdateFavoritesError action) {
-  final List<int> favoriteMovies = [...state.user!.favoriteMovies, action.id];
+  final List<int> favoriteMovies = <int>[
+    ...state.user!.favoriteMovies,
+    action.id
+  ];
   if (action.add) {
     favoriteMovies.remove(action.id);
   } else {
@@ -92,12 +100,14 @@ AppState _actionStart(AppState state, ActionStart action) {
 
 AppState _actionDone(AppState state, ActionDone action) {
   return state.copyWith(
-      pending: <String>{...state.pending}..remove(action.pendingId));
+    pending: <String>{...state.pending}..remove(action.pendingId),
+  );
 }
 
 AppState _onCommentsEvent(AppState state, OnCommentsEvent action) {
   return state.copyWith(
-      comments: <Comment>{...state.comments, ...action.comments}.toList());
+    comments: <Comment>{...state.comments, ...action.comments}.toList(),
+  );
 }
 
 AppState _setSelectedMovieId(AppState state, SetSelectedMovieId action) {
@@ -114,5 +124,18 @@ AppState _getUserSuccessful(AppState state, GetUserSuccessful action) {
 }
 
 AppState _getFilteredSuccessful(AppState state, GetFilteredSuccessful action) {
-  return state.copyWith(filteredMovies: action.filteredMovies);
+  return state.copyWith(
+    pageNumber: state.pageNumber + 1,
+    filteredMovies: <Movie>[...state.filteredMovies, ...action.filteredMovies],
+  );
+}
+
+AppState _getSortedSuccessful(AppState state, GetSortedSuccessful action) {
+  return state.copyWith(
+    pageNumber: state.pageNumber + 1,
+    filteredMovies: <Movie>[
+      ...state.filteredMovies,
+      ...action.sortedListMovies
+    ],
+  );
 }

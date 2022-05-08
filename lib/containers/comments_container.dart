@@ -13,8 +13,10 @@ class CommentsContainer extends StatelessWidget {
     return StoreConnector<AppState, List<Comment>>(
       converter: (Store<AppState> store) {
         return store.state.comments
-            .where((Comment comment) =>
-                comment.movieId == store.state.selectedMovieId)
+            .where(
+              (Comment comment) =>
+                  comment.movieId == store.state.selectedMovieId,
+            )
             .where((Comment comment) => store.state.users[comment.uid] != null)
             .toList();
       },

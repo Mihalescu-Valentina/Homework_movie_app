@@ -43,8 +43,10 @@ class AuthApi implements AuthApiBase {
   }
 
   @override
-  Future<AppUser> login(
-      {required String email, required String password}) async {
+  Future<AppUser> login({
+    required String email,
+    required String password,
+  }) async {
     /*final List<int> favorite = _getCurrentFavorites();
     final UserCredential credential = await _auth.signInWithEmailAndPassword(
         email: email, password: password);
@@ -62,9 +64,11 @@ class AuthApi implements AuthApiBase {
   }
 
   @override
-  Future<AppUser> create({required String email,
+  Future<AppUser> create({
+    required String email,
     required String password,
-    required String username}) async {
+    required String username,
+  }) async {
     final UserCredential credentials = await _auth
         .createUserWithEmailAndPassword(email: email, password: password);
     await _auth.currentUser!.updateDisplayName(username);
@@ -93,7 +97,8 @@ class AuthApi implements AuthApiBase {
         user = user.copyWith(favoriteMovies: <int>[...user.favoriteMovies, id]);
       } else {
         user = user.copyWith(
-            favoriteMovies: <int>[...user.favoriteMovies]..remove(id));
+          favoriteMovies: <int>[...user.favoriteMovies]..remove(id),
+        );
       }
       transaction.set(_firestore.doc('user/$uid'), user.toJson());
     });

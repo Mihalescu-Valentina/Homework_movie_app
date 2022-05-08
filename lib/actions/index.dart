@@ -12,13 +12,15 @@ part 'get_user.dart';
 
 part 'index.freezed.dart';
 
-part 'listenComments.dart';
+part 'listen_comments.dart';
 
 part 'login.dart';
 
 part 'logout.dart';
 
 part 'get_filtered.dart';
+
+part 'get_sorted.dart';
 
 part 'set.dart';
 

@@ -56,12 +56,13 @@ class _CommentsPageState extends State<CommentsPage> {
                                   final AppUser user = users[comment.uid]!;
 
                                   return ListTile(
-                                      title: Text(comment.text),
-                                      subtitle: Text(<Object>[
-                                        user.username,
-                                        comment.createdAt
-                                      ].join('\n')));
-                                },
+                                  title: Text(comment.text),
+                                  subtitle: Text(
+                                    <Object>[user.username, comment.createdAt]
+                                        .join('\n'),
+                                  ),
+                                );
+                              },
                                 itemCount: comments.length,
                               ),
                             )
@@ -72,21 +73,26 @@ class _CommentsPageState extends State<CommentsPage> {
                           TextField(
                             controller: _controller,
                             decoration: InputDecoration(
-                                contentPadding:
-                                    const EdgeInsets.symmetric(horizontal: 8.0),
-                                suffix: IconButton(
-                                    onPressed: () {
-                                      if (_controller.text.isEmpty) {
-                                        return;
-                                      }
-                                      StoreProvider.of<AppState>(context)
-                                          .dispatch(CreateComment.start(
-                                              _controller.text));
-                                      _controller.clear();
-                                    },
-                                    icon: const Icon(Icons.send))),
+                              contentPadding:
+                                const EdgeInsets.symmetric(horizontal: 8),
+                            suffix: IconButton(
+                              onPressed: () {
+                                if (_controller.text.isEmpty) {
+                                  return;
+                                }
+                                StoreProvider.of<AppState>(context).dispatch(
+                                  CreateComment.start(
+                                    _controller.text,
+                                  ),
+                                );
+                                _controller.clear();
+                              },
+                              icon: const Icon(Icons.send),
+                            ),
                           ),
-                        ]),
+                        ),
+                      ],
+                    ),
                   );
                 },
               );

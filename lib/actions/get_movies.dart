@@ -33,4 +33,3 @@ class GetMovies with _$GetMovies implements AppAction {
 
   static String get pendingKeyMore => _kGetMoviesMorePendingId;
 }
-

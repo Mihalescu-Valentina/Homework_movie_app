@@ -25,24 +25,19 @@ class AppEpic {
       TypedEpic<AppState, LogoutStart>(_logoutStart),
       TypedEpic<AppState, GetUserStart>(_getUserStart),
       TypedEpic<AppState, GetFilteredStart>(_getFilteredStart),
+      TypedEpic<AppState, GetSortedStart>(_getSortedStart),
     ]);
   }
 
-  /*Stream<AppAction> _getMovies(
-      Stream<GetMoviesStart> actions, EpicStore<AppState> store) {
-    return actions.flatMap((GetMoviesStart action) {
-      return Stream<void>.value(null)
-          .asyncMap((_) => _movieApi.getMovies(store.state.pageNumber))
-          .map<GetMovies>(GetMovies.successful)
-          .onErrorReturnWith($GetMovies.error)
-          .doOnData(action.onResult);
-    });*/
 
   Stream<AppAction> _getMovies(
-      Stream<dynamic> actions, EpicStore<AppState> store) {
+    Stream<dynamic> actions,
+    EpicStore<AppState> store,
+  ) {
     return actions
-        .where((dynamic action) =>
-            action is GetMoviesStart || action is GetMoviesMore)
+        .where(
+      (dynamic action) => action is GetMoviesStart || action is GetMoviesMore,
+    )
         .flatMap((dynamic action) {
       String pendingId = '';
       ActionResult onResult = (_) {};
@@ -70,14 +65,18 @@ class AppEpic {
   }
 
   Stream<AppAction> _loginStart(
-      Stream<LoginStart> actions, EpicStore<AppState> store) {
+    Stream<LoginStart> actions,
+    EpicStore<AppState> store,
+  ) {
     return actions.flatMap((LoginStart action) {
       return Stream<void>.value(null)
-          .asyncMap((_) =>
-              _authApi.login(email: action.email, password: action.password))
+          .asyncMap(
+            (_) =>
+                _authApi.login(email: action.email, password: action.password),
+          )
           .map<Login>($Login.successful)
           .onErrorReturnWith(
-        (error, stackTrace) {
+        (Object error, StackTrace stackTrace) {
           return Login.error(error, stackTrace);
         },
       ).doOnData(action.onResult);
@@ -85,7 +84,9 @@ class AppEpic {
   }
 
   Stream<AppAction> _getCurrentUserStart(
-      Stream<GetCurrentUserStart> actions, EpicStore<AppState> store) {
+    Stream<GetCurrentUserStart> actions,
+    EpicStore<AppState> store,
+  ) {
     return actions.flatMap((GetCurrentUserStart action) {
       return Stream<void>.value(null)
           .asyncMap((_) => _authApi.getCurrentUser())
@@ -95,13 +96,18 @@ class AppEpic {
   }
 
   Stream<AppAction> _createUserStart(
-      Stream<CreateUserStart> actions, EpicStore<AppState> store) {
+    Stream<CreateUserStart> actions,
+    EpicStore<AppState> store,
+  ) {
     return actions.flatMap((CreateUserStart action) {
       return Stream<void>.value(null)
-          .asyncMap((_) => _authApi.create(
+          .asyncMap(
+            (_) => _authApi.create(
               email: action.email,
               password: action.password,
-              username: action.username))
+              username: action.username,
+            ),
+          )
           .map<CreateUser>($CreateUser.successful)
           .onErrorReturnWith($CreateUser.error)
           .doOnData(action.onResult);
@@ -109,20 +115,34 @@ class AppEpic {
   }
 
   Stream<AppAction> _updateFavoritesStart(
-      Stream<UpdateFavoritesStart> actions, EpicStore<AppState> store) {
+    Stream<UpdateFavoritesStart> actions,
+    EpicStore<AppState> store,
+  ) {
     return actions.flatMap((UpdateFavoritesStart action) {
       return Stream<void>.value(null)
-          .asyncMap((_) => _authApi.updateFavorites(
-              store.state.user!.uid, action.id, add: action.add))
+          .asyncMap(
+            (_) => _authApi.updateFavorites(
+              store.state.user!.uid,
+              action.id,
+              add: action.add,
+            ),
+          )
           .mapTo(const UpdateFavorites.successful())
-          .onErrorReturnWith((error, stackTrace) => UpdateFavorites.error(
-              error, stackTrace, action.id,
-              add: action.add));
+          .onErrorReturnWith(
+            (Object error, StackTrace stackTrace) => UpdateFavorites.error(
+              error,
+              stackTrace,
+              action.id,
+              add: action.add,
+            ),
+          );
     });
   }
 
   Stream<AppAction> _logoutStart(
-      Stream<LogoutStart> actions, EpicStore<AppState> store) {
+    Stream<LogoutStart> actions,
+    EpicStore<AppState> store,
+  ) {
     return actions.flatMap((LogoutStart action) {
       return Stream<void>.value(null)
           .asyncMap((_) => _authApi.logout())
@@ -132,7 +152,9 @@ class AppEpic {
   }
 
   Stream<AppAction> _getComments(
-      Stream<dynamic> actions, EpicStore<AppState> store) {
+    Stream<dynamic> actions,
+    EpicStore<AppState> store,
+  ) {
     return actions
         .whereType<ListenForCommentsStart>()
         .flatMap((ListenForCommentsStart action) {
@@ -149,7 +171,9 @@ class AppEpic {
   }
 
   Stream<AppAction> _createCommentStart(
-      Stream<CreateCommentStart> actions, EpicStore<AppState> store) {
+    Stream<CreateCommentStart> actions,
+    EpicStore<AppState> store,
+  ) {
     return actions.flatMap((CreateCommentStart action) {
       return Stream<void>.value(null)
           .asyncMap((_) {
@@ -165,7 +189,9 @@ class AppEpic {
   }
 
   Stream<AppAction> _listenForComments(
-      Stream<dynamic> actions, EpicStore<AppState> store) {
+    Stream<dynamic> actions,
+    EpicStore<AppState> store,
+  ) {
     return actions
         .whereType<ListenForCommentsStart>()
         .flatMap((ListenForCommentsStart action) {
@@ -176,7 +202,8 @@ class AppEpic {
           ListenForComments.event(comments),
           ...comments
               .where(
-                  (Comment comment) => store.state.users[comment.uid] == null)
+                (Comment comment) => store.state.users[comment.uid] == null,
+              )
               .map((Comment comment) => GetUser(comment.uid))
               .toSet(),
         ];
@@ -189,8 +216,10 @@ class AppEpic {
     });
   }
 
-  Stream _getUserStart(
-      Stream<GetUserStart> actions, EpicStore<AppState> store) {
+  Stream<AppAction> _getUserStart(
+    Stream<GetUserStart> actions,
+    EpicStore<AppState> store,
+  ) {
     return actions.flatMap((GetUserStart action) {
       return Stream<void>.value(null)
           .asyncMap((_) => _authApi.getUser(action.uid))
@@ -199,14 +228,31 @@ class AppEpic {
     });
   }
 
-  Stream _getFilteredStart(
-      Stream<GetFilteredStart> actions, EpicStore<AppState> store) {
+  Stream<AppAction> _getFilteredStart(
+    Stream<GetFilteredStart> actions,
+    EpicStore<AppState> store,
+  ) {
     return actions.flatMap((GetFilteredStart action) {
       return Stream<void>.value(null)
           .asyncMap(
-              (_) => _movieApi.getFilteredMovies(action.filter, action.result))
-          .map<dynamic>($GetFiltered.successful)
+            (_) => _movieApi.getFilteredMovies(action.page, action.genre),
+          )
+          .map<GetFiltered>($GetFiltered.successful)
           .onErrorReturnWith($GetFiltered.error);
+    });
+  }
+
+  Stream<AppAction> _getSortedStart(
+    Stream<GetSortedStart> actions,
+    EpicStore<AppState> store,
+  ) {
+    return actions.flatMap((GetSortedStart action) {
+      return Stream<void>.value(null)
+          .asyncMap(
+            (_) => _movieApi.getSortedMovies(action.page),
+          )
+          .map<GetSorted>($GetSorted.successful)
+          .onErrorReturnWith($GetSorted.error);
     });
   }
 }

@@ -10,6 +10,7 @@ class AppState with _$AppState {
     @Default(<String>{}) Set<String> pending,
     @Default(<Comment>[]) List<Comment> comments,
     @Default(<Movie>[]) List<Movie> filteredMovies,
+    @Default(<Movie>[]) List<Movie> sortedMovies,
     int? selectedMovieId,
     @Default(<String, AppUser>{}) Map<String /*uid*/, AppUser> users,
   }) = AppState$;
