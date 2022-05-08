@@ -14,9 +14,7 @@ AppState reducer(AppState state, dynamic action) {
 Reducer<AppState> _reducer = combineReducers<AppState>(<Reducer<AppState>>[
 //the reducer modifies the state based on the actions
 
-  //TypedReducer<AppState, GetMovies>(_getMovies),
   TypedReducer<AppState, GetMoviesSuccessful>(_getMoviesSuccessful),
-  //TypedReducer<AppState, GetMoviesError>(_getMoviesError),
   TypedReducer<AppState, LoginSuccessful>(_loginSuccessful),
   TypedReducer<AppState, GetCurrentUserSuccessful>(_getCurrentUserSuccessful),
   TypedReducer<AppState, CreateUserSuccessful>(_createUserSuccessful),
@@ -124,4 +122,3 @@ AppState _getFilteredSuccessful(AppState state, GetFilteredSuccessful action) {
     filteredMovies: <Movie>[...action.filteredMovies],
   );
 }
-

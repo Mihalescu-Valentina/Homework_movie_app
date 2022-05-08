@@ -42,7 +42,7 @@ Map<String, dynamic> _$$Comment$ToJson(_$Comment$ instance) =>
     };
 
 _$Movie$ _$$Movie$FromJson(Map<String, dynamic> json) => _$Movie$(
-      id: json['id'] as int,
+  id: json['id'] as int,
       title: json['title'] as String,
       year: json['year'] as int,
       rating: (json['rating'] as num).toDouble(),

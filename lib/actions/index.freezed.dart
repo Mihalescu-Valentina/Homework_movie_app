@@ -118,6 +118,7 @@ class _$CreateCommentCopyWithImpl<$Res>
   _$CreateCommentCopyWithImpl(this._value, this._then);
 
   final CreateComment _value;
+
   // ignore: unused_field
   final $Res Function(CreateComment) _then;
 
@@ -140,6 +141,7 @@ abstract class $CreateCommentStartCopyWith<$Res>
   factory $CreateCommentStartCopyWith(
           CreateCommentStart value, $Res Function(CreateCommentStart) then) =
       _$CreateCommentStartCopyWithImpl<$Res>;
+
   @override
   $Res call({String text, String pendingId});
 }
@@ -289,8 +291,10 @@ abstract class CreateCommentStart implements CreateComment, ActionStart {
       _$CreateCommentStart;
 
   String get text;
+
   @override
   String get pendingId;
+
   @override
   @JsonKey(ignore: true)
   $CreateCommentStartCopyWith<CreateCommentStart> get copyWith =>
@@ -303,6 +307,7 @@ abstract class $CreateCommentSuccessfulCopyWith<$Res>
   factory $CreateCommentSuccessfulCopyWith(CreateCommentSuccessful value,
           $Res Function(CreateCommentSuccessful) then) =
       _$CreateCommentSuccessfulCopyWithImpl<$Res>;
+
   @override
   $Res call({String pendingId});
 }
@@ -443,6 +448,7 @@ abstract class CreateCommentSuccessful implements CreateComment, ActionDone {
 
   @override
   String get pendingId;
+
   @override
   @JsonKey(ignore: true)
   $CreateCommentSuccessfulCopyWith<CreateCommentSuccessful> get copyWith =>
@@ -455,6 +461,7 @@ abstract class $CreateCommentErrorCopyWith<$Res>
   factory $CreateCommentErrorCopyWith(
           CreateCommentError value, $Res Function(CreateCommentError) then) =
       _$CreateCommentErrorCopyWithImpl<$Res>;
+
   @override
   $Res call({Object error, StackTrace stackTrace, String pendingId});
 }
@@ -616,9 +623,12 @@ abstract class CreateCommentError
       [String pendingId]) = _$CreateCommentError;
 
   Object get error;
+
   StackTrace get stackTrace;
+
   @override
   String get pendingId;
+
   @override
   @JsonKey(ignore: true)
   $CreateCommentErrorCopyWith<CreateCommentError> get copyWith =>
@@ -734,6 +744,7 @@ abstract class $CreateUserStartCopyWith<$Res> {
   factory $CreateUserStartCopyWith(
           CreateUserStart value, $Res Function(CreateUserStart) then) =
       _$CreateUserStartCopyWithImpl<$Res>;
+
   $Res call(
       {String email, String password, String username, ActionResult onResult});
 }
@@ -909,7 +920,9 @@ abstract class CreateUserStart implements CreateUser {
   String get email;
   String get password;
   String get username;
+
   ActionResult get onResult;
+
   @JsonKey(ignore: true)
   $CreateUserStartCopyWith<CreateUserStart> get copyWith =>
       throw _privateConstructorUsedError;
@@ -1066,6 +1079,7 @@ abstract class CreateUserSuccessful implements CreateUser {
   const factory CreateUserSuccessful(AppUser user) = _$CreateUserSuccessful;
 
   AppUser get user;
+
   @JsonKey(ignore: true)
   $CreateUserSuccessfulCopyWith<CreateUserSuccessful> get copyWith =>
       throw _privateConstructorUsedError;
@@ -1224,7 +1238,9 @@ abstract class CreateUserError implements CreateUser, ErrorAction {
       _$CreateUserError;
 
   Object get error;
+
   StackTrace get stackTrace;
+
   @JsonKey(ignore: true)
   $CreateUserErrorCopyWith<CreateUserError> get copyWith =>
       throw _privateConstructorUsedError;
@@ -1316,6 +1332,7 @@ class _$GetCurrentUserCopyWithImpl<$Res>
   _$GetCurrentUserCopyWithImpl(this._value, this._then);
 
   final GetCurrentUser _value;
+
   // ignore: unused_field
   final $Res Function(GetCurrentUser) _then;
 }
@@ -1436,6 +1453,7 @@ abstract class $GetCurrentUserSuccessfulCopyWith<$Res> {
   factory $GetCurrentUserSuccessfulCopyWith(GetCurrentUserSuccessful value,
           $Res Function(GetCurrentUserSuccessful) then) =
       _$GetCurrentUserSuccessfulCopyWithImpl<$Res>;
+
   $Res call({AppUser? user});
 
   $AppUserCopyWith<$Res>? get user;
@@ -1582,6 +1600,7 @@ abstract class GetCurrentUserSuccessful implements GetCurrentUser {
       _$GetCurrentUserSuccessful;
 
   AppUser? get user;
+
   @JsonKey(ignore: true)
   $GetCurrentUserSuccessfulCopyWith<GetCurrentUserSuccessful> get copyWith =>
       throw _privateConstructorUsedError;
@@ -1735,7 +1754,9 @@ abstract class GetCurrentUserError implements GetCurrentUser, ErrorAction {
       _$GetCurrentUserError;
 
   Object get error;
+
   StackTrace get stackTrace;
+
   @JsonKey(ignore: true)
   $GetCurrentUserErrorCopyWith<GetCurrentUserError> get copyWith =>
       throw _privateConstructorUsedError;
@@ -1878,6 +1899,7 @@ abstract class $GetMoviesStartCopyWith<$Res>
   factory $GetMoviesStartCopyWith(
           GetMoviesStart value, $Res Function(GetMoviesStart) then) =
       _$GetMoviesStartCopyWithImpl<$Res>;
+
   @override
   $Res call({ActionResult onResult, String pendingId});
 }
@@ -2031,8 +2053,10 @@ abstract class GetMoviesStart implements GetMovies, ActionStart {
       _$GetMoviesStart;
 
   ActionResult get onResult;
+
   @override
   String get pendingId;
+
   @override
   @JsonKey(ignore: true)
   $GetMoviesStartCopyWith<GetMoviesStart> get copyWith =>
@@ -2045,6 +2069,7 @@ abstract class $GetMoviesMoreCopyWith<$Res>
   factory $GetMoviesMoreCopyWith(
           GetMoviesMore value, $Res Function(GetMoviesMore) then) =
       _$GetMoviesMoreCopyWithImpl<$Res>;
+
   @override
   $Res call({ActionResult onResult, String pendingId});
 }
@@ -2198,8 +2223,10 @@ abstract class GetMoviesMore implements GetMovies, ActionStart {
       _$GetMoviesMore;
 
   ActionResult get onResult;
+
   @override
   String get pendingId;
+
   @override
   @JsonKey(ignore: true)
   $GetMoviesMoreCopyWith<GetMoviesMore> get copyWith =>
@@ -2212,6 +2239,7 @@ abstract class $GetMoviesSuccessfulCopyWith<$Res>
   factory $GetMoviesSuccessfulCopyWith(
           GetMoviesSuccessful value, $Res Function(GetMoviesSuccessful) then) =
       _$GetMoviesSuccessfulCopyWithImpl<$Res>;
+
   @override
   $Res call({List<Movie> movies, String pendingId});
 }
@@ -2365,8 +2393,10 @@ abstract class GetMoviesSuccessful implements GetMovies, ActionDone {
       _$GetMoviesSuccessful;
 
   List<Movie> get movies;
+
   @override
   String get pendingId;
+
   @override
   @JsonKey(ignore: true)
   $GetMoviesSuccessfulCopyWith<GetMoviesSuccessful> get copyWith =>
@@ -2379,6 +2409,7 @@ abstract class $GetMoviesErrorCopyWith<$Res>
   factory $GetMoviesErrorCopyWith(
           GetMoviesError value, $Res Function(GetMoviesError) then) =
       _$GetMoviesErrorCopyWithImpl<$Res>;
+
   @override
   $Res call({Object error, StackTrace stackTrace, String pendingId});
 }
@@ -2543,8 +2574,10 @@ abstract class GetMoviesError implements GetMovies, ActionDone, ErrorAction {
 
   Object get error;
   StackTrace get stackTrace;
+
   @override
   String get pendingId;
+
   @override
   @JsonKey(ignore: true)
   $GetMoviesErrorCopyWith<GetMoviesError> get copyWith =>
@@ -2775,6 +2808,7 @@ abstract class GetUserStart implements GetUser {
   const factory GetUserStart(String uid) = _$GetUserStart;
 
   String get uid;
+
   @JsonKey(ignore: true)
   $GetUserStartCopyWith<GetUserStart> get copyWith =>
       throw _privateConstructorUsedError;
@@ -2923,6 +2957,7 @@ abstract class GetUserSuccessful implements GetUser {
   const factory GetUserSuccessful(AppUser user) = _$GetUserSuccessful;
 
   AppUser get user;
+
   @JsonKey(ignore: true)
   $GetUserSuccessfulCopyWith<GetUserSuccessful> get copyWith =>
       throw _privateConstructorUsedError;
@@ -3075,7 +3110,9 @@ abstract class GetUserError implements GetUser, ErrorAction {
       _$GetUserError;
 
   Object get error;
+
   StackTrace get stackTrace;
+
   @JsonKey(ignore: true)
   $GetUserErrorCopyWith<GetUserError> get copyWith =>
       throw _privateConstructorUsedError;
@@ -3181,6 +3218,7 @@ class _$ListenForCommentsCopyWithImpl<$Res>
   _$ListenForCommentsCopyWithImpl(this._value, this._then);
 
   final ListenForComments _value;
+
   // ignore: unused_field
   final $Res Function(ListenForComments) _then;
 }
@@ -3327,6 +3365,7 @@ abstract class ListenForCommentsStart implements ListenForComments {
   const factory ListenForCommentsStart(int movieId) = _$ListenForCommentsStart;
 
   int get movieId;
+
   @JsonKey(ignore: true)
   $ListenForCommentsStartCopyWith<ListenForCommentsStart> get copyWith =>
       throw _privateConstructorUsedError;
@@ -3474,6 +3513,7 @@ abstract class ListenForCommentsDone implements ListenForComments {
   const factory ListenForCommentsDone(int movieId) = _$ListenForCommentsDone;
 
   int get movieId;
+
   @JsonKey(ignore: true)
   $ListenForCommentsDoneCopyWith<ListenForCommentsDone> get copyWith =>
       throw _privateConstructorUsedError;
@@ -3620,6 +3660,7 @@ abstract class OnCommentsEvent implements ListenForComments {
   const factory OnCommentsEvent(List<Comment> comments) = _$OnCommentsEvent;
 
   List<Comment> get comments;
+
   @JsonKey(ignore: true)
   $OnCommentsEventCopyWith<OnCommentsEvent> get copyWith =>
       throw _privateConstructorUsedError;
@@ -3781,7 +3822,9 @@ abstract class _ListenForCommentsError
       _$_ListenForCommentsError;
 
   Object get error;
+
   StackTrace get stackTrace;
+
   @JsonKey(ignore: true)
   _$ListenForCommentsErrorCopyWith<_ListenForCommentsError> get copyWith =>
       throw _privateConstructorUsedError;
@@ -3921,6 +3964,7 @@ abstract class $LoginStartCopyWith<$Res> implements $LoginCopyWith<$Res> {
   factory $LoginStartCopyWith(
           LoginStart value, $Res Function(LoginStart) then) =
       _$LoginStartCopyWithImpl<$Res>;
+
   @override
   $Res call(
       {String email, String password, ActionResult onResult, String pendingId});
@@ -4102,8 +4146,10 @@ abstract class LoginStart implements Login, ActionStart {
   String get email;
   String get password;
   ActionResult get onResult;
+
   @override
   String get pendingId;
+
   @override
   @JsonKey(ignore: true)
   $LoginStartCopyWith<LoginStart> get copyWith =>
@@ -4278,8 +4324,10 @@ abstract class LoginSuccessful implements Login, UserAction, ActionDone {
       _$LoginSuccessful;
 
   AppUser get user;
+
   @override
   String get pendingId;
+
   @override
   @JsonKey(ignore: true)
   $LoginSuccessfulCopyWith<LoginSuccessful> get copyWith =>
@@ -4456,8 +4504,10 @@ abstract class LoginError implements Login, ActionDone, ErrorAction {
 
   Object get error;
   StackTrace get stackTrace;
+
   @override
   String get pendingId;
+
   @override
   @JsonKey(ignore: true)
   $LoginErrorCopyWith<LoginError> get copyWith =>
@@ -4917,7 +4967,9 @@ abstract class LogoutError implements Logout, ErrorAction {
       _$LogoutError;
 
   Object get error;
+
   StackTrace get stackTrace;
+
   @JsonKey(ignore: true)
   $LogoutErrorCopyWith<LogoutError> get copyWith =>
       throw _privateConstructorUsedError;
@@ -5160,7 +5212,9 @@ abstract class GetFilteredStart implements GetFiltered {
   const factory GetFilteredStart(int page, String? genre) = _$GetFilteredStart;
 
   int get page;
+
   String? get genre;
+
   @JsonKey(ignore: true)
   $GetFilteredStartCopyWith<GetFilteredStart> get copyWith =>
       throw _privateConstructorUsedError;
@@ -5304,6 +5358,7 @@ abstract class GetFilteredSuccessful implements GetFiltered {
       _$GetFilteredSuccessful;
 
   List<Movie> get filteredMovies;
+
   @JsonKey(ignore: true)
   $GetFilteredSuccessfulCopyWith<GetFilteredSuccessful> get copyWith =>
       throw _privateConstructorUsedError;
@@ -5457,7 +5512,9 @@ abstract class GetFilteredError implements GetFiltered, ErrorAction {
       _$GetFilteredError;
 
   Object get error;
+
   StackTrace get stackTrace;
+
   @JsonKey(ignore: true)
   $GetFilteredErrorCopyWith<GetFilteredError> get copyWith =>
       throw _privateConstructorUsedError;
@@ -5687,6 +5744,7 @@ abstract class GetSortedStart implements GetSorted {
   const factory GetSortedStart(int page) = _$GetSortedStart;
 
   int get page;
+
   @JsonKey(ignore: true)
   $GetSortedStartCopyWith<GetSortedStart> get copyWith =>
       throw _privateConstructorUsedError;
@@ -5829,6 +5887,7 @@ abstract class GetSortedSuccessful implements GetSorted {
       _$GetSortedSuccessful;
 
   List<Movie> get sortedListMovies;
+
   @JsonKey(ignore: true)
   $GetSortedSuccessfulCopyWith<GetSortedSuccessful> get copyWith =>
       throw _privateConstructorUsedError;
@@ -5981,7 +6040,9 @@ abstract class GetSortedError implements GetSorted, ErrorAction {
       _$GetSortedError;
 
   Object get error;
+
   StackTrace get stackTrace;
+
   @JsonKey(ignore: true)
   $GetSortedErrorCopyWith<GetSortedError> get copyWith =>
       throw _privateConstructorUsedError;
@@ -6024,6 +6085,7 @@ class _$SetSelectedMovieIdCopyWithImpl<$Res>
   _$SetSelectedMovieIdCopyWithImpl(this._value, this._then);
 
   final SetSelectedMovieId _value;
+
   // ignore: unused_field
   final $Res Function(SetSelectedMovieId) _then;
 
@@ -6046,6 +6108,7 @@ abstract class $SetSelectedMovieId$CopyWith<$Res>
   factory $SetSelectedMovieId$CopyWith(
           SetSelectedMovieId$ value, $Res Function(SetSelectedMovieId$) then) =
       _$SetSelectedMovieId$CopyWithImpl<$Res>;
+
   @override
   $Res call({int movieId});
 }
@@ -6110,6 +6173,7 @@ abstract class SetSelectedMovieId$ implements SetSelectedMovieId {
 
   @override
   int get movieId;
+
   @override
   @JsonKey(ignore: true)
   $SetSelectedMovieId$CopyWith<SetSelectedMovieId$> get copyWith =>
@@ -6210,6 +6274,7 @@ class _$UpdateFavoritesCopyWithImpl<$Res>
   _$UpdateFavoritesCopyWithImpl(this._value, this._then);
 
   final UpdateFavorites _value;
+
   // ignore: unused_field
   final $Res Function(UpdateFavorites) _then;
 }
@@ -6365,7 +6430,9 @@ abstract class UpdateFavoritesStart implements UpdateFavorites {
       _$UpdateFavoritesStart;
 
   int get id;
+
   bool get add;
+
   @JsonKey(ignore: true)
   $UpdateFavoritesStartCopyWith<UpdateFavoritesStart> get copyWith =>
       throw _privateConstructorUsedError;
@@ -6663,7 +6730,9 @@ abstract class UpdateFavoritesError implements UpdateFavorites, ErrorAction {
   Object get error;
   StackTrace get stackTrace;
   int get id;
+
   bool get add;
+
   @JsonKey(ignore: true)
   $UpdateFavoritesErrorCopyWith<UpdateFavoritesError> get copyWith =>
       throw _privateConstructorUsedError;

@@ -50,12 +50,19 @@ mixin _$AppState {
   List<Movie> get movies =>
       throw _privateConstructorUsedError; //@Default(true) bool isLoading,
   int get pageNumber => throw _privateConstructorUsedError;
+
   AppUser? get user => throw _privateConstructorUsedError;
+
   Set<String> get pending => throw _privateConstructorUsedError;
+
   List<Comment> get comments => throw _privateConstructorUsedError;
+
   List<Movie> get filteredMovies => throw _privateConstructorUsedError;
+
   List<Movie> get sortedMovies => throw _privateConstructorUsedError;
+
   int? get selectedMovieId => throw _privateConstructorUsedError;
+
   Map<String, AppUser> get users => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -347,8 +354,10 @@ abstract class AppState$ implements AppState {
   List<Movie> get sortedMovies;
   @override
   int? get selectedMovieId;
+
   @override
   Map<String, AppUser> get users;
+
   @override
   @JsonKey(ignore: true)
   $AppState$CopyWith<AppState$> get copyWith =>
@@ -400,6 +409,7 @@ mixin _$AppUser {
 abstract class $AppUserCopyWith<$Res> {
   factory $AppUserCopyWith(AppUser value, $Res Function(AppUser) then) =
       _$AppUserCopyWithImpl<$Res>;
+
   $Res call(
       {String email, String uid, String username, List<int> favoriteMovies});
 }
@@ -444,6 +454,7 @@ class _$AppUserCopyWithImpl<$Res> implements $AppUserCopyWith<$Res> {
 abstract class $AppUser$CopyWith<$Res> implements $AppUserCopyWith<$Res> {
   factory $AppUser$CopyWith(AppUser$ value, $Res Function(AppUser$) then) =
       _$AppUser$CopyWithImpl<$Res>;
+
   @override
   $Res call(
       {String email, String uid, String username, List<int> favoriteMovies});
@@ -559,8 +570,10 @@ abstract class AppUser$ implements AppUser {
   String get uid;
   @override
   String get username;
+
   @override
   List<int> get favoriteMovies;
+
   @override
   @JsonKey(ignore: true)
   $AppUser$CopyWith<AppUser$> get copyWith =>
@@ -615,6 +628,7 @@ mixin _$Comment {
 abstract class $CommentCopyWith<$Res> {
   factory $CommentCopyWith(Comment value, $Res Function(Comment) then) =
       _$CommentCopyWithImpl<$Res>;
+
   $Res call(
       {String id, String uid, int movieId, String text, DateTime createdAt});
 }
@@ -664,6 +678,7 @@ class _$CommentCopyWithImpl<$Res> implements $CommentCopyWith<$Res> {
 abstract class $Comment$CopyWith<$Res> implements $CommentCopyWith<$Res> {
   factory $Comment$CopyWith(Comment$ value, $Res Function(Comment$) then) =
       _$Comment$CopyWithImpl<$Res>;
+
   @override
   $Res call(
       {String id, String uid, int movieId, String text, DateTime createdAt});
@@ -790,8 +805,10 @@ abstract class Comment$ implements Comment {
   int get movieId;
   @override
   String get text;
+
   @override
   DateTime get createdAt;
+
   @override
   @JsonKey(ignore: true)
   $Comment$CopyWith<Comment$> get copyWith =>
