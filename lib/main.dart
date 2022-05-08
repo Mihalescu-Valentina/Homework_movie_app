@@ -9,6 +9,7 @@ import 'package:homework_movie_app/data/movie_api.dart';
 import 'package:homework_movie_app/epics/app_epic.dart';
 import 'package:homework_movie_app/models/index.dart';
 import 'package:homework_movie_app/presentation/comments_page.dart';
+import 'package:homework_movie_app/presentation/filtered_movies_page.dart';
 import 'package:homework_movie_app/presentation/home.dart';
 import 'package:homework_movie_app/presentation/login_page.dart';
 import 'package:homework_movie_app/presentation/sign_up_page.dart';
@@ -27,7 +28,6 @@ Future<void> main() async {
   final MovieApi movieApi = MovieApi(client, firestore);
   final AuthApi authApi = AuthApi(auth, firestore);
   final AppEpic epic = AppEpic(movieApi, authApi);
-
   final Store<AppState> store = Store<AppState>(
     reducer,
     initialState: const AppState(),
@@ -35,7 +35,6 @@ Future<void> main() async {
       EpicMiddleware<AppState>(epic.epics),
     ],
   )..dispatch(const GetCurrentUser());
-
   runApp(MoviesApp(store: store));
 }
 
@@ -49,12 +48,22 @@ class MoviesApp extends StatelessWidget {
       store: store,
       child: MaterialApp(
         routes: <String, WidgetBuilder>{
-          '/': (BuildContext context) => const Home(),
-          '/signUp': (BuildContext context) => const SignUpPage(),
-          '/login': (BuildContext context) => const LoginPage(),
-          '/comments': (BuildContext context) => const CommentsPage(),
+          AppRoutes.home: (BuildContext context) => const Home(),
+          AppRoutes.signUp: (BuildContext context) => const SignUpPage(),
+          AppRoutes.login: (BuildContext context) => const LoginPage(),
+          AppRoutes.comments: (BuildContext context) => const CommentsPage(),
+          AppRoutes.filteredMovies: (BuildContext context) =>
+              const FilteredMoviesPage(),
         },
       ),
     );
   }
+}
+
+class AppRoutes {
+  static const String home = '/';
+  static const String filteredMovies = '/filteredMovies';
+  static const String login = '/login';
+  static const String signUp = '/signUp';
+  static const String comments = '/comments';
 }

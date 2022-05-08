@@ -3,15 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:homework_movie_app/data/auth_api_base.dart';
 import 'package:homework_movie_app/models/index.dart';
 
-//const String _kFavoriteMoviesKey = 'user_favorite_movies';
-
 class AuthApi implements AuthApiBase {
   AuthApi(this._auth, this._firestore);
 
   final FirebaseAuth _auth;
   final FirebaseFirestore _firestore;
-
-  //final SharedPreferences _preferences;
 
   @override
   Future<AppUser?> getCurrentUser() async {
@@ -33,12 +29,6 @@ class AuthApi implements AuthApiBase {
       }
     }
 
-    /*uid: _auth.currentUser!.uid,
-        email: _auth.currentUser!.email!,
-        username: _auth.currentUser!.displayName!,
-        favoriteMovies: favorites,
-      );*/
-
     return null;
   }
 
@@ -47,16 +37,6 @@ class AuthApi implements AuthApiBase {
     required String email,
     required String password,
   }) async {
-    /*final List<int> favorite = _getCurrentFavorites();
-    final UserCredential credential = await _auth.signInWithEmailAndPassword(
-        email: email, password: password);
-    return AppUser(
-      uid: credential.user!.uid,
-      email: email,
-      username: credential.user!.displayName!,
-      favoriteMovies: favorite,
-    );*/
-
     await _auth.signInWithEmailAndPassword(email: email, password: password);
     final DocumentSnapshot<Map<String, dynamic>> snapshot =
         await _firestore.doc('users_1/${_auth.currentUser!.uid}').get();
@@ -102,22 +82,7 @@ class AuthApi implements AuthApiBase {
       }
       transaction.set(_firestore.doc('user/$uid'), user.toJson());
     });
-
-    //await _preferences.setString(_kFavoriteMoviesKey, jsonEncode(ids));
   }
-
-  /*List<int> _getCurrentFavorites() {
-    /*final String? data = _preferences.getString(_kFavoriteMoviesKey);
-    List<int> ids;
-    if (data != null) {
-      ids = List<int>.from(jsonDecode(data) as List<dynamic>);
-    } else {
-      ids = <int>[];
-    }
-    return ids;
-  }*/
-    return [];
-  }*/
 
   @override
   Future<AppUser> getUser(String uid) async {

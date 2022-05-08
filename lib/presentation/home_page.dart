@@ -1,11 +1,10 @@
-// ignore_for_file: unnecessary_statements
-
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:homework_movie_app/actions/index.dart';
 import 'package:homework_movie_app/containers/filtered_movies_container.dart';
 import 'package:homework_movie_app/containers/pending_container.dart';
 import 'package:homework_movie_app/containers/user_container.dart';
+import 'package:homework_movie_app/main.dart';
 import 'package:homework_movie_app/models/index.dart';
 import 'package:redux/redux.dart';
 
@@ -50,7 +49,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void dispose() {
-    _controller.dispose;
+    _controller.dispose();
     super.dispose();
   }
 
@@ -63,326 +62,37 @@ class _HomePageState extends State<HomePage> {
           builder: (BuildContext context, List<Movie> filteredMovies) {
             return Scaffold(
               drawer: Drawer(
-                child: ListTile(
-                  leading: Padding(
-                    padding:
-                        const EdgeInsets.only(left: 24, right: 32, top: 35),
-                    child: Column(
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            StoreProvider.of<AppState>(context).dispatch(
-                              const GetFiltered(1, 'comedy'),
-                            );
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute<Widget>(
-                                builder: (BuildContext context) => Scaffold(
-                                  body: PendingContainer(
-                                    builder: (BuildContext context,
-                                        Set<String> pending) {
-                                      return Builder(
-                                        builder: (BuildContext context) {
-                                          final bool isLoading = state.pending
-                                              .contains(GetMovies.pendingKey);
-                                          final bool isLoadingMore =
-                                              state.pending.contains(
-                                                  GetMovies.pendingKeyMore);
-                                          if (isLoading &&
-                                              state.filteredMovies.isEmpty) {
-                                            return const Center(
-                                                child:
-                                                    CircularProgressIndicator());
-                                          }
-                                          return UserContainer(
-                                            builder: (BuildContext context,
-                                                AppUser? user) {
-                                              return Stack(
-                                                children: <Widget>[
-                                                  ListView.builder(
-                                                    controller: _controller,
-                                                    itemCount: state
-                                                            .filteredMovies
-                                                            .length +
-                                                        (isLoadingMore ? 1 : 0),
-                                                    itemBuilder:
-                                                        (BuildContext context,
-                                                            int index) {
-                                                      final Movie movie =
-                                                          state.filteredMovies[
-                                                              index];
-                                                      final bool isFavorite =
-                                                          user!.favoriteMovies
-                                                              .contains(
-                                                                  movie.id);
-                                                      if (index ==
-                                                          state.filteredMovies
-                                                              .length) {
-                                                        return const CircularProgressIndicator();
-                                                      }
-                                                      return GestureDetector(
-                                                        onTap: () {
-                                                          StoreProvider.of<
-                                                                      AppState>(
-                                                                  context)
-                                                              .dispatch(
-                                                            SetSelectedMovieId(
-                                                                movie.id),
-                                                          );
-                                                          Navigator.pushNamed(
-                                                              context,
-                                                              '/comments');
-                                                        },
-                                                        child: Column(
-                                                          children: <Widget>[
-                                                            Stack(
-                                                              children: <
-                                                                  Widget>[
-                                                                SizedBox(
-                                                                  height: 320,
-                                                                  child: Image
-                                                                      .network(
-                                                                    movie
-                                                                        .poster,
-                                                                  ),
-                                                                ),
-                                                                IconButton(
-                                                                  color: Colors
-                                                                      .red,
-                                                                  onPressed:
-                                                                      () {
-                                                                    StoreProvider.of<
-                                                                        AppState>(
-                                                                      context,
-                                                                    ).dispatch(
-                                                                      UpdateFavorites(
-                                                                        movie
-                                                                            .id,
-                                                                        add:
-                                                                            !isFavorite,
-                                                                      ),
-                                                                    );
-                                                                  },
-                                                                  icon: Icon(
-                                                                    isFavorite
-                                                                        ? Icons
-                                                                            .favorite
-                                                                        : Icons
-                                                                            .favorite_border,
-                                                                  ),
-                                                                )
-                                                              ],
-                                                            ),
-                                                            Text(movie.title),
-                                                            Text(
-                                                                '${movie.year}'),
-                                                            Text(movie.genres
-                                                                .join(',')),
-                                                            Text(
-                                                                '${movie.rating}')
-                                                          ],
-                                                        ),
-                                                      );
-                                                    },
-                                                  ),
-                                                  if (state.pending.contains(
-                                                      GetMovies.pendingKey))
-                                                    Positioned(
-                                                      left: 0,
-                                                      bottom: 0,
-                                                      child: SizedBox(
-                                                        width: MediaQuery.of(
-                                                                context)
-                                                            .size
-                                                            .width,
-                                                        height: 80,
-                                                        child: const Center(
-                                                          child:
-                                                              CircularProgressIndicator(),
-                                                        ),
-                                                      ),
-                                                    )
-                                                ],
-                                              );
-                                            },
-                                          );
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: const <Widget>[
-                              Text('Comedy'), // <-- Text
-                              SizedBox(
-                                width: 10,
-                                height: 10,
-                              ),
-                            ],
-                          ),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            StoreProvider.of<AppState>(context).dispatch(
-                              const GetFiltered(1, 'drama'),
-                            );
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute<Widget>(
-                                builder: (BuildContext context) => Scaffold(
-                                  body: PendingContainer(
-                                    builder: (BuildContext context,
-                                        Set<String> pending) {
-                                      return Builder(
-                                        builder: (BuildContext context) {
-                                          final bool isLoading = state.pending
-                                              .contains(GetMovies.pendingKey);
-                                          final bool isLoadingMore =
-                                              state.pending.contains(
-                                                  GetMovies.pendingKeyMore);
-                                          if (isLoading &&
-                                              state.filteredMovies.isEmpty) {
-                                            return const Center(
-                                                child:
-                                                    CircularProgressIndicator());
-                                          }
-                                          return UserContainer(
-                                            builder: (BuildContext context,
-                                                AppUser? user) {
-                                              return Stack(
-                                                children: <Widget>[
-                                                  ListView.builder(
-                                                    controller: _controller,
-                                                    itemCount: state
-                                                            .filteredMovies
-                                                            .length +
-                                                        (isLoadingMore ? 1 : 0),
-                                                    itemBuilder:
-                                                        (BuildContext context,
-                                                            int index) {
-                                                      final Movie movie =
-                                                          state.filteredMovies[
-                                                              index];
-                                                      final bool isFavorite =
-                                                          user!.favoriteMovies
-                                                              .contains(
-                                                                  movie.id);
-                                                      if (index ==
-                                                          state.filteredMovies
-                                                              .length) {
-                                                        return const CircularProgressIndicator();
-                                                      }
-                                                      return GestureDetector(
-                                                        onTap: () {
-                                                          StoreProvider.of<
-                                                                      AppState>(
-                                                                  context)
-                                                              .dispatch(
-                                                            SetSelectedMovieId(
-                                                                movie.id),
-                                                          );
-                                                          Navigator.pushNamed(
-                                                              context,
-                                                              '/comments');
-                                                        },
-                                                        child: Column(
-                                                          children: <Widget>[
-                                                            Stack(
-                                                              children: <
-                                                                  Widget>[
-                                                                SizedBox(
-                                                                  height: 320,
-                                                                  child: Image
-                                                                      .network(
-                                                                    movie
-                                                                        .poster,
-                                                                  ),
-                                                                ),
-                                                                IconButton(
-                                                                  color: Colors
-                                                                      .red,
-                                                                  onPressed:
-                                                                      () {
-                                                                    StoreProvider.of<
-                                                                        AppState>(
-                                                                      context,
-                                                                    ).dispatch(
-                                                                      UpdateFavorites(
-                                                                        movie
-                                                                            .id,
-                                                                        add:
-                                                                            !isFavorite,
-                                                                      ),
-                                                                    );
-                                                                  },
-                                                                  icon: Icon(
-                                                                    isFavorite
-                                                                        ? Icons
-                                                                            .favorite
-                                                                        : Icons
-                                                                            .favorite_border,
-                                                                  ),
-                                                                )
-                                                              ],
-                                                            ),
-                                                            Text(movie.title),
-                                                            Text(
-                                                                '${movie.year}'),
-                                                            Text(movie.genres
-                                                                .join(',')),
-                                                            Text(
-                                                                '${movie.rating}')
-                                                          ],
-                                                        ),
-                                                      );
-                                                    },
-                                                  ),
-                                                  if (state.pending.contains(
-                                                      GetMovies.pendingKey))
-                                                    Positioned(
-                                                      left: 0,
-                                                      bottom: 0,
-                                                      child: SizedBox(
-                                                        width: MediaQuery.of(
-                                                                context)
-                                                            .size
-                                                            .width,
-                                                        height: 80,
-                                                        child: const Center(
-                                                          child:
-                                                              CircularProgressIndicator(),
-                                                        ),
-                                                      ),
-                                                    )
-                                                ],
-                                              );
-                                            },
-                                          );
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: const <Widget>[
-                              Text('Drama'), // <-- Text
-                              SizedBox(
-                                width: 5,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        StoreProvider.of<AppState>(context).dispatch(
+                          const GetFiltered(1, 'comedy'),
+                        );
+                        Navigator.pushNamed(context, AppRoutes.filteredMovies);
+                      },
+                      child: const Text('Comedy'),
                     ),
-                  ),
+                    ElevatedButton(
+                      onPressed: () {
+                        StoreProvider.of<AppState>(context).dispatch(
+                          const GetFiltered(1, 'drama'),
+                        );
+                        Navigator.pushNamed(context, AppRoutes.filteredMovies);
+                      },
+                      child: const Text('Drama'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        StoreProvider.of<AppState>(context).dispatch(
+                          const GetFiltered(1, 'animation'),
+                        );
+                        Navigator.pushNamed(context, AppRoutes.filteredMovies);
+                      },
+                      child: const Text('Animation'),
+                    ),
+                  ],
                 ),
               ),
               appBar: AppBar(
@@ -425,55 +135,12 @@ class _HomePageState extends State<HomePage> {
                                 itemBuilder: (BuildContext context, int index) {
                                   final Movie movie = state.movies[index];
                                   final bool isFavorite =
-                                  user!.favoriteMovies.contains(movie.id);
+                                      user!.favoriteMovies.contains(movie.id);
                                   if (index == state.movies.length) {
                                     return const CircularProgressIndicator();
                                   }
-                                  return GestureDetector(
-                                    onTap: () {
-                                      StoreProvider.of<AppState>(context)
-                                          .dispatch(
-                                        SetSelectedMovieId(movie.id),
-                                      );
-                                      Navigator.pushNamed(context, '/comments');
-                                    },
-                                    child: Column(
-                                      children: <Widget>[
-                                        Stack(
-                                          children: <Widget>[
-                                            SizedBox(
-                                              height: 320,
-                                              child: Image.network(
-                                                movie.poster,
-                                              ),
-                                            ),
-                                            IconButton(
-                                              color: Colors.red,
-                                              onPressed: () {
-                                                StoreProvider.of<AppState>(
-                                                  context,
-                                                ).dispatch(
-                                                  UpdateFavorites(
-                                                    movie.id,
-                                                    add: !isFavorite,
-                                                  ),
-                                                );
-                                              },
-                                              icon: Icon(
-                                                isFavorite
-                                                    ? Icons.favorite
-                                                    : Icons.favorite_border,
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                        Text(movie.title),
-                                        Text('${movie.year}'),
-                                        Text(movie.genres.join(',')),
-                                        Text('${movie.rating}')
-                                      ],
-                                    ),
-                                  );
+                                  return MovieWidget(
+                                      movie: movie, isFavorite: isFavorite);
                                 },
                               ),
                               if (state.pending.contains(GetMovies.pendingKey))
@@ -500,6 +167,73 @@ class _HomePageState extends State<HomePage> {
           },
         );
       },
+    );
+  }
+}
+
+class MovieWidget extends StatelessWidget {
+  const MovieWidget({
+    Key? key,
+    required this.movie,
+    required this.isFavorite,
+  }) : super(key: key);
+  final Movie movie;
+  final bool isFavorite;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        StoreProvider.of<AppState>(context).dispatch(
+          SetSelectedMovieId(movie.id),
+        );
+        Navigator.pushNamed(context, AppRoutes.comments);
+      },
+      child: Column(
+        children: <Widget>[
+          Stack(
+            children: <Widget>[
+              SizedBox(
+                height: 320,
+                child: Image.network(
+                  movie.poster,
+                ),
+              ),
+              IconButton(
+                color: Colors.red,
+                onPressed: () {
+                  StoreProvider.of<AppState>(
+                    context,
+                  ).dispatch(
+                    UpdateFavorites(
+                      movie.id,
+                      add: !isFavorite,
+                    ),
+                  );
+                },
+                icon: MovieFavoriteIcon(isFavorite: isFavorite),
+              )
+            ],
+          ),
+          Text(movie.title),
+          Text('${movie.year}'),
+          Text(movie.genres.join(',')),
+          Text('${movie.rating}')
+        ],
+      ),
+    );
+  }
+}
+
+class MovieFavoriteIcon extends StatelessWidget {
+  const MovieFavoriteIcon({Key? key, required this.isFavorite})
+      : super(key: key);
+  final bool isFavorite;
+
+  @override
+  Widget build(BuildContext context) {
+    return Icon(
+      isFavorite ? Icons.favorite : Icons.favorite_border,
     );
   }
 }

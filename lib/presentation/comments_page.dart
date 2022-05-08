@@ -46,16 +46,16 @@ class _CommentsPageState extends State<CommentsPage> {
                 builder: (BuildContext context, List<Comment> comments) {
                   return SafeArea(
                     child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: <Widget>[
-                          if (comments.isNotEmpty)
-                            Expanded(
-                              child: ListView.builder(
-                                itemBuilder: (BuildContext context, int index) {
-                                  final Comment comment = comments[index];
-                                  final AppUser user = users[comment.uid]!;
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        if (comments.isNotEmpty)
+                          Expanded(
+                            child: ListView.builder(
+                              itemBuilder: (BuildContext context, int index) {
+                                final Comment comment = comments[index];
+                                final AppUser user = users[comment.uid]!;
 
-                                  return ListTile(
+                                return ListTile(
                                   title: Text(comment.text),
                                   subtitle: Text(
                                     <Object>[user.username, comment.createdAt]
@@ -63,17 +63,17 @@ class _CommentsPageState extends State<CommentsPage> {
                                   ),
                                 );
                               },
-                                itemCount: comments.length,
-                              ),
-                            )
-                          else
-                            const Center(
-                              child: Text('No comments'),
+                              itemCount: comments.length,
                             ),
-                          TextField(
-                            controller: _controller,
-                            decoration: InputDecoration(
-                              contentPadding:
+                          )
+                        else
+                          const Center(
+                            child: Text('No comments'),
+                          ),
+                        TextField(
+                          controller: _controller,
+                          decoration: InputDecoration(
+                            contentPadding:
                                 const EdgeInsets.symmetric(horizontal: 8),
                             suffix: IconButton(
                               onPressed: () {

@@ -29,7 +29,6 @@ class AppEpic {
     ]);
   }
 
-
   Stream<AppAction> _getMovies(
     Stream<dynamic> actions,
     EpicStore<AppState> store,

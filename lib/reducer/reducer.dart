@@ -43,11 +43,6 @@ AppState _getMoviesSuccessful(AppState state, GetMoviesSuccessful action) {
   );
 }
 
-/*AppState _getMoviesError(AppState state, GetMoviesError action) {
-  return state.copyWith(isLoading: false);
-//... spread operator combines what was before with what we give it
-}*/
-
 AppState _loginSuccessful(AppState state, LoginSuccessful action) {
   return state.copyWith(user: action.user);
   //e action.user pentru ca loginsuccessful unde avem appuser e actiune
@@ -126,16 +121,7 @@ AppState _getUserSuccessful(AppState state, GetUserSuccessful action) {
 AppState _getFilteredSuccessful(AppState state, GetFilteredSuccessful action) {
   return state.copyWith(
     pageNumber: state.pageNumber + 1,
-    filteredMovies: <Movie>[...state.filteredMovies, ...action.filteredMovies],
+    filteredMovies: <Movie>[...action.filteredMovies],
   );
 }
 
-AppState _getSortedSuccessful(AppState state, GetSortedSuccessful action) {
-  return state.copyWith(
-    pageNumber: state.pageNumber + 1,
-    filteredMovies: <Movie>[
-      ...state.filteredMovies,
-      ...action.sortedListMovies
-    ],
-  );
-}
